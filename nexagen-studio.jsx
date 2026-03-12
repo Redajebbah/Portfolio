@@ -1384,7 +1384,188 @@ function AppContent() {
         <span style={{ fontFamily:fb,fontSize:"0.75rem",color:T.textDim }}>{t.footer.madeWith}</span>
       </div>
     </footer>
+    <ChatBot />
   </>);
+}
+
+// ═══ CHAT WIDGET ═══
+function ChatBot() {
+  const { T } = useT();
+  const ff = "var(--f-display)";
+  const fb = "var(--f-body)";
+
+  const [open,      setOpen]      = useState(false);
+  const [closing,   setClosing]   = useState(false);
+  const [messages,  setMessages]  = useState([
+    { role:"assistant", content:"Hi! I'm **Nexia**, your Nexagen Studio assistant. Ask me anything about our services, process, or how we can help your project. 👋" }
+  ]);
+  const [input,     setInput]     = useState("");
+  const [loading,   setLoading]   = useState(false);
+  const [pulse,     setPulse]     = useState(false);
+  const bottomRef = useRef(null);
+  const inputRef  = useRef(null);
+
+  // Pulse badge when closed
+  useEffect(() => {
+    if (open) return;
+    const id = setTimeout(() => setPulse(true), 3000);
+    return () => clearTimeout(id);
+  }, [open]);
+
+  // Scroll to bottom on new message
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior:"smooth" });
+  }, [messages, loading]);
+
+  // Focus input when opened
+  useEffect(() => {
+    if (open) setTimeout(() => inputRef.current?.focus(), 300);
+  }, [open]);
+
+  const handleOpen = () => { setOpen(true); setClosing(false); setPulse(false); };
+  const handleClose = () => { setClosing(true); setTimeout(() => { setOpen(false); setClosing(false); }, 340); };
+
+  const send = useCallback(async () => {
+    const text = input.trim();
+    if (!text || loading) return;
+    const next = [...messages, { role:"user", content:text }];
+    setMessages(next);
+    setInput("");
+    setLoading(true);
+    try {
+      const res = await fetch("/api/chat", {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({ messages: next }),
+      });
+      if (!res.ok || !res.body) throw new Error("API error");
+      const reader = res.body.getReader();
+      const dec = new TextDecoder();
+      let reply = "";
+      setMessages(m => [...m, { role:"assistant", content:"" }]);
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        reply += dec.decode(value, { stream:true });
+        setMessages(m => {
+          const copy = [...m];
+          copy[copy.length - 1] = { role:"assistant", content:reply };
+          return copy;
+        });
+      }
+    } catch {
+      setMessages(m => [...m, { role:"assistant", content:"Sorry, something went wrong. Please try again or reach us at hello@nexagen.studio" }]);
+    } finally {
+      setLoading(false);
+    }
+  }, [input, loading, messages]);
+
+  const onKeyDown = (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } };
+
+  // Simple markdown-ish bold renderer
+  const renderText = (text) => text.split(/(\*\*[^*]+\*\*)/).map((part,i) =>
+    part.startsWith("**") ? <strong key={i}>{part.slice(2,-2)}</strong> : part
+  );
+
+  const accent = "var(--accent)";
+  const isVisible = open && !closing;
+
+  return (
+    <>
+      {/* ── Floating Button ── */}
+      <button
+        onClick={open ? handleClose : handleOpen}
+        aria-label="Open chat"
+        style={{ position:"fixed",bottom:"1.75rem",right:"1.75rem",zIndex:9000,width:56,height:56,borderRadius:"50%",border:"none",cursor:"pointer",background:accent,color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",boxShadow:`0 8px 32px ${accent}55`,transition:"transform 0.3s cubic-bezier(.16,1,.3,1), box-shadow 0.3s",fontSize:"1.4rem" }}
+        onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.1)";e.currentTarget.style.boxShadow=`0 12px 40px ${accent}77`;}}
+        onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)";e.currentTarget.style.boxShadow=`0 8px 32px ${accent}55`;}}
+      >
+        {open ? "×" : "✦"}
+        {/* Pulse badge */}
+        {!open && pulse && (
+          <span style={{ position:"absolute",top:2,right:2,width:14,height:14,borderRadius:"50%",background:"#ef4444",border:"2px solid var(--bg)",animation:"chat-pulse 1.5s ease-in-out infinite" }} />
+        )}
+      </button>
+
+      {/* ── Chat Panel ── */}
+      {(open || closing) && (
+        <div style={{ position:"fixed",bottom:"5.5rem",right:"1.75rem",zIndex:9000,width:"min(380px, calc(100vw - 2rem))",height:"min(540px, calc(100vh - 7rem))",borderRadius:"1.5rem",background:"var(--bg-card)",border:"1px solid var(--border)",boxShadow:"0 32px 100px rgba(0,0,0,0.35)",display:"flex",flexDirection:"column",overflow:"hidden",transformOrigin:"bottom right",transform:isVisible?"scale(1) translateY(0)":"scale(0.88) translateY(24px)",opacity:isVisible?1:0,transition:"transform 0.34s cubic-bezier(.16,1,.3,1), opacity 0.28s" }}>
+
+          {/* Header */}
+          <div style={{ padding:"1rem 1.25rem",background:`linear-gradient(135deg,${accent}28,${accent}0a)`,borderBottom:"1px solid var(--border)",display:"flex",alignItems:"center",gap:"0.75rem",flexShrink:0 }}>
+            <div style={{ width:36,height:36,borderRadius:"50%",background:accent,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"0.9rem",flexShrink:0 }}>✦</div>
+            <div style={{ flex:1,minWidth:0 }}>
+              <p style={{ fontFamily:ff,fontWeight:700,fontSize:"0.92rem",color:"var(--c-text)",margin:0,letterSpacing:"-0.01em" }}>Nexia</p>
+              <p style={{ fontFamily:fb,fontSize:"0.68rem",color:"var(--c-text-dim)",margin:0 }}>Nexagen Studio Assistant</p>
+            </div>
+            <div style={{ width:8,height:8,borderRadius:"50%",background:"#22c55e",boxShadow:"0 0 6px #22c55e88" }} />
+          </div>
+
+          {/* Messages */}
+          <div style={{ flex:1,overflowY:"auto",padding:"1rem",display:"flex",flexDirection:"column",gap:"0.75rem" }}>
+            {messages.map((msg,i) => (
+              <div key={i} style={{ display:"flex",justifyContent:msg.role==="user"?"flex-end":"flex-start" }}>
+                <div style={{ maxWidth:"82%",padding:"0.65rem 0.95rem",borderRadius:msg.role==="user"?"1.1rem 1.1rem 0.25rem 1.1rem":"1.1rem 1.1rem 1.1rem 0.25rem",background:msg.role==="user"?accent:"var(--bg)",border:msg.role==="user"?"none":"1px solid var(--border)",color:msg.role==="user"?"#fff":"var(--c-text)",fontFamily:fb,fontSize:"0.83rem",lineHeight:1.55,wordBreak:"break-word" }}>
+                  {renderText(msg.content)}
+                </div>
+              </div>
+            ))}
+            {loading && (
+              <div style={{ display:"flex",justifyContent:"flex-start" }}>
+                <div style={{ padding:"0.65rem 1.1rem",borderRadius:"1.1rem 1.1rem 1.1rem 0.25rem",background:"var(--bg)",border:"1px solid var(--border)",display:"flex",gap:"0.3rem",alignItems:"center" }}>
+                  {[0,1,2].map(d=>(
+                    <span key={d} style={{ width:6,height:6,borderRadius:"50%",background:accent,display:"inline-block",animation:`chat-dot 1.2s ${d*0.2}s ease-in-out infinite` }} />
+                  ))}
+                </div>
+              </div>
+            )}
+            <div ref={bottomRef} />
+          </div>
+
+          {/* Suggestions (shown only when 1 message = opening state) */}
+          {messages.length === 1 && (
+            <div style={{ padding:"0 1rem 0.75rem",display:"flex",gap:"0.45rem",flexWrap:"wrap" }}>
+              {["What do you build?","How much does it cost?","Show me your process"].map((s,i)=>(
+                <button key={i} onClick={()=>{ setInput(s); setTimeout(()=>{ setInput(s); inputRef.current?.focus(); },10); }}
+                  style={{ fontFamily:fb,fontSize:"0.7rem",padding:"0.3rem 0.75rem",borderRadius:"2rem",background:`${accent}14`,border:`1px solid ${accent}33`,color:accent,cursor:"pointer",transition:"all 0.2s",fontWeight:600 }}
+                  onMouseEnter={e=>{e.currentTarget.style.background=`${accent}28`;}}
+                  onMouseLeave={e=>{e.currentTarget.style.background=`${accent}14`;}}>
+                  {s}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Input bar */}
+          <div style={{ padding:"0.85rem 1rem",borderTop:"1px solid var(--border)",display:"flex",gap:"0.6rem",alignItems:"flex-end",flexShrink:0,background:"var(--bg-card)" }}>
+            <textarea
+              ref={inputRef}
+              rows={1}
+              value={input}
+              onChange={e=>{ setInput(e.target.value); e.target.style.height="auto"; e.target.style.height=Math.min(e.target.scrollHeight,96)+"px"; }}
+              onKeyDown={onKeyDown}
+              placeholder="Ask me anything about Nexagen…"
+              style={{ flex:1,fontFamily:fb,fontSize:"0.83rem",padding:"0.5rem 0.75rem",borderRadius:"1rem",background:"var(--bg)",border:"1px solid var(--border)",color:"var(--c-text)",resize:"none",outline:"none",lineHeight:1.5,maxHeight:96,overflowY:"auto",transition:"border-color 0.2s" }}
+              onFocus={e=>e.target.style.borderColor=accent}
+              onBlur={e=>e.target.style.borderColor="var(--border)"}
+            />
+            <button
+              onClick={send}
+              disabled={!input.trim() || loading}
+              style={{ width:38,height:38,borderRadius:"50%",border:"none",cursor:input.trim()&&!loading?"pointer":"default",background:input.trim()&&!loading?accent:"var(--border)",color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"0.95rem",flexShrink:0,transition:"all 0.25s",transform:"rotate(-45deg)" }}
+            >↑</button>
+          </div>
+
+        </div>
+      )}
+
+      {/* Keyframes injected once */}
+      <style>{`
+        @keyframes chat-pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.3);opacity:0.7} }
+        @keyframes chat-dot { 0%,80%,100%{transform:translateY(0)} 40%{transform:translateY(-5px)} }
+      `}</style>
+    </>
+  );
 }
 
 // ═══ ROOT EXPORT ═══
