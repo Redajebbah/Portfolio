@@ -693,31 +693,150 @@ function ProcessItem({ number, title, desc, index }) {
   );
 }
 
+// ═══ PROJECT DATA ═══
+const projectData = [
+  {
+    title: "Emballage Projet",
+    category: "E-Commerce Platform",
+    year: "2024",
+    role: "Full-Stack Developer",
+    description: "A complete e-commerce platform built for a Moroccan packaging company. Features a full product catalogue, custom quote requests, and an admin dashboard — powered by Django and deployed seamlessly on Vercel.",
+    highlights: ["Django REST backend", "Product catalogue", "Quote request system", "Admin dashboard", "Vercel deployment"],
+    live: "https://emballageprojet.vercel.app",
+    github: null,
+  },
+  {
+    title: "Al Atlassia Advisor",
+    category: "Business Intelligence",
+    year: "2024",
+    role: "Frontend Developer",
+    description: "A business intelligence advisory platform designed to help Moroccan businesses make data-driven decisions. Delivers interactive dashboards, trend analysis, and clear actionable insights.",
+    highlights: ["React + TypeScript", "Tailwind CSS", "Interactive dashboards", "Trend analytics", "Responsive design"],
+    live: null,
+    github: "https://github.com/Redajebbah/al-atlassia-advisor",
+  },
+  {
+    title: "Flow Connect",
+    category: "Workflow Platform",
+    year: "2024",
+    role: "Frontend Developer",
+    description: "A modern workflow and team collaboration platform that streamlines task assignment, project tracking, and real-time team communication — built with React and TypeScript for maximum performance.",
+    highlights: ["React + TypeScript", "Tailwind CSS", "Workflow automation", "Team collaboration", "Real-time updates"],
+    live: null,
+    github: "https://github.com/Redajebbah/flow-connect",
+  },
+  {
+    title: "Nexagen Studio",
+    category: "AI-Powered Agency",
+    year: "2025",
+    role: "Founder & Developer",
+    description: "The very site you're experiencing — an AI-powered digital agency built with Next.js 14. Features immersive animations, an integrated AI chat agent, multilingual support (EN / FR / AR), and a dedicated AI Agents showcase.",
+    highlights: ["Next.js 14 App Router", "Claude AI integration", "Three.js animations", "Multilingual EN/FR/AR", "AI Agents section"],
+    live: "https://nexagen-studio.vercel.app",
+    github: "https://github.com/Redajebbah/nexagen-studio",
+  },
+];
+
 // ═══ PROJECT CARD ═══
-function ProjectCard({ title, category, color, index, url, tech }) {
+function ProjectCard({ title, category, color, index, tech, onClick }) {
   const [h, setH] = useState(false);
   const { isRTL } = useT();
   return (
     <Reveal delay={index * 0.1}>
-      <a href={url} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none",display:"block" }}>
-        <div data-hover onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)} style={{ position:"relative",borderRadius:"1.25rem",overflow:"hidden",cursor:"pointer",aspectRatio:index%3===1?"3/4":"4/5",background:T.bgCard,border:`1px solid ${h?color+"55":T.border}`,transition:"border-color 0.4s, box-shadow 0.4s",boxShadow:h?`0 20px 60px ${color}22`:"none" }}>
-          <div style={{ position:"absolute",inset:0,background:`linear-gradient(135deg,${color}22,${color}08)`,transition:"opacity 0.6s",opacity:h?1:0.5 }} />
-          <div style={{ position:"absolute",top:"50%",left:"50%",width:120,height:120,borderRadius:"50%",background:`radial-gradient(circle,${color}30,transparent)`,transform:h?"translate(-50%,-50%) scale(3)":"translate(-50%,-50%) scale(1)",transition:"transform 0.8s cubic-bezier(.16,1,.3,1)",filter:"blur(30px)" }} />
-          <div style={{ position:"absolute",inset:0,opacity:0.04,backgroundImage:`linear-gradient(${color}40 1px,transparent 1px),linear-gradient(90deg,${color}40 1px,transparent 1px)`,backgroundSize:"40px 40px" }} />
-          {/* Tech stack pill — top left */}
-          {tech && (
-            <div style={{ position:"absolute",top:"1.1rem",[isRTL?"right":"left"]:"1.1rem",fontFamily:"var(--f-body)",fontSize:"0.6rem",letterSpacing:"0.08em",fontWeight:600,padding:"0.22rem 0.65rem",borderRadius:"2rem",background:`${color}22`,border:`1px solid ${color}40`,color,backdropFilter:"blur(8px)",opacity:h?1:0.7,transition:"opacity 0.3s" }}>
-              {tech}
-            </div>
-          )}
-          <div style={{ position:"absolute",bottom:0,left:0,right:0,padding:"2rem",background:"linear-gradient(transparent,rgba(10,10,16,0.92))",textAlign:isRTL?"right":"left" }}>
-            <span style={{ fontFamily:isRTL?"var(--f-ar)":"var(--f-body)",fontSize:"0.65rem",letterSpacing:isRTL?"0":"0.15em",textTransform:isRTL?"none":"uppercase",color,fontWeight:600,opacity:0.9 }}>{category}</span>
-            <h3 style={{ fontFamily:isRTL?"var(--f-ar)":"var(--f-display)",fontWeight:700,fontSize:"1.3rem",color:"#e8e6e1",marginTop:"0.3rem",letterSpacing:isRTL?"0":"-0.01em" }}>{title}</h3>
+      <div data-hover onClick={onClick} onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)} style={{ position:"relative",borderRadius:"1.25rem",overflow:"hidden",cursor:"pointer",aspectRatio:index%3===1?"3/4":"4/5",background:T.bgCard,border:`1px solid ${h?color+"55":T.border}`,transition:"border-color 0.4s, box-shadow 0.4s",boxShadow:h?`0 20px 60px ${color}22`:"none" }}>
+        <div style={{ position:"absolute",inset:0,background:`linear-gradient(135deg,${color}22,${color}08)`,transition:"opacity 0.6s",opacity:h?1:0.5 }} />
+        <div style={{ position:"absolute",top:"50%",left:"50%",width:120,height:120,borderRadius:"50%",background:`radial-gradient(circle,${color}30,transparent)`,transform:h?"translate(-50%,-50%) scale(3)":"translate(-50%,-50%) scale(1)",transition:"transform 0.8s cubic-bezier(.16,1,.3,1)",filter:"blur(30px)" }} />
+        <div style={{ position:"absolute",inset:0,opacity:0.04,backgroundImage:`linear-gradient(${color}40 1px,transparent 1px),linear-gradient(90deg,${color}40 1px,transparent 1px)`,backgroundSize:"40px 40px" }} />
+        {/* Tech stack pill — top left */}
+        {tech && (
+          <div style={{ position:"absolute",top:"1.1rem",[isRTL?"right":"left"]:"1.1rem",fontFamily:"var(--f-body)",fontSize:"0.6rem",letterSpacing:"0.08em",fontWeight:600,padding:"0.22rem 0.65rem",borderRadius:"2rem",background:`${color}22`,border:`1px solid ${color}40`,color,backdropFilter:"blur(8px)",opacity:h?1:0.7,transition:"opacity 0.3s" }}>
+            {tech}
           </div>
-          <div style={{ position:"absolute",top:"1.25rem",[isRTL?"left":"right"]:"1.25rem",width:36,height:36,borderRadius:"50%",border:"1px solid rgba(255,255,255,0.2)",display:"flex",alignItems:"center",justifyContent:"center",color:"#e8e6e1",fontSize:"0.9rem",opacity:h?1:0,transform:h?"translate(0,0)":`translate(${isRTL?"-8px":"8px"},-8px)`,transition:"all 0.5s cubic-bezier(.16,1,.3,1)",background:`${color}33`,backdropFilter:"blur(8px)" }}>{isRTL?"↖":"↗"}</div>
+        )}
+        {/* "View details" hint on hover */}
+        <div style={{ position:"absolute",top:"50%",left:"50%",transform:h?"translate(-50%,-50%)":"translate(-50%,-40%)",opacity:h?1:0,transition:"all 0.45s cubic-bezier(.16,1,.3,1)",display:"flex",flexDirection:"column",alignItems:"center",gap:"0.5rem",pointerEvents:"none" }}>
+          <div style={{ width:52,height:52,borderRadius:"50%",background:`${color}22`,border:`1px solid ${color}55`,backdropFilter:"blur(12px)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"1.3rem" }}>◎</div>
+          <span style={{ fontFamily:"var(--f-body)",fontSize:"0.68rem",fontWeight:600,letterSpacing:"0.1em",textTransform:"uppercase",color:"#e8e6e1",background:"rgba(10,10,16,0.55)",backdropFilter:"blur(8px)",padding:"0.2rem 0.75rem",borderRadius:"2rem" }}>View Details</span>
         </div>
-      </a>
+        <div style={{ position:"absolute",bottom:0,left:0,right:0,padding:"2rem",background:"linear-gradient(transparent,rgba(10,10,16,0.92))",textAlign:isRTL?"right":"left",transition:"opacity 0.3s",opacity:h?0.4:1 }}>
+          <span style={{ fontFamily:isRTL?"var(--f-ar)":"var(--f-body)",fontSize:"0.65rem",letterSpacing:isRTL?"0":"0.15em",textTransform:isRTL?"none":"uppercase",color,fontWeight:600,opacity:0.9 }}>{category}</span>
+          <h3 style={{ fontFamily:isRTL?"var(--f-ar)":"var(--f-display)",fontWeight:700,fontSize:"1.3rem",color:"#e8e6e1",marginTop:"0.3rem",letterSpacing:isRTL?"0":"-0.01em" }}>{title}</h3>
+        </div>
+      </div>
     </Reveal>
+  );
+}
+
+// ═══ PROJECT MODAL ═══
+function ProjectModal({ index, color, onClose }) {
+  const { isRTL } = useT();
+  const [mounted, setMounted] = useState(false);
+  const [closing, setClosing] = useState(false);
+  const handleClose = useCallback(() => { setClosing(true); setTimeout(() => onClose(), 420); }, [onClose]);
+  useEffect(() => {
+    requestAnimationFrame(() => setMounted(true));
+    const onKey = (e) => { if (e.key === "Escape") handleClose(); };
+    window.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = ""; };
+  }, [handleClose]);
+  const p = projectData[index];
+  const techLabel = ["Python · Django · Vercel","React · TypeScript · Tailwind","React · TypeScript · Tailwind","Next.js 14 · Claude AI · Three.js"][index];
+  const c = color;
+  const isVisible = mounted && !closing;
+  if (!p) return null;
+  return (
+    <div onClick={handleClose} style={{ position:"fixed",inset:0,zIndex:10000,background:"rgba(0,0,0,0.78)",backdropFilter:"blur(18px)",WebkitBackdropFilter:"blur(18px)",display:"flex",alignItems:"center",justifyContent:"center",padding:"1.5rem",opacity:isVisible?1:0,transition:"opacity 0.42s cubic-bezier(.4,0,.2,1)" }}>
+      <div onClick={(e)=>e.stopPropagation()} style={{ width:"100%",maxWidth:780,maxHeight:"90vh",overflowY:"auto",borderRadius:"1.75rem",background:"var(--bg-card)",border:"1px solid var(--border)",boxShadow:`0 48px 140px rgba(0,0,0,0.65), 0 0 0 1px ${c}18`,transform:isVisible?"translateY(0) scale(1)":"translateY(64px) scale(0.94)",transition:"transform 0.42s cubic-bezier(.16,1,.3,1), opacity 0.42s",opacity:isVisible?1:0 }}>
+
+        {/* ── Header ── */}
+        <div style={{ background:`linear-gradient(135deg,${c}28 0%,${c}0c 55%,transparent)`,borderBottom:`1px solid ${c}1e`,padding:"2.5rem 2.5rem 2rem",position:"relative",overflow:"hidden",borderRadius:"1.75rem 1.75rem 0 0" }}>
+          <div style={{ position:"absolute",top:"-25%",right:"-8%",width:280,height:280,borderRadius:"50%",background:`radial-gradient(circle,${c}38,transparent 70%)`,filter:"blur(55px)",pointerEvents:"none" }} />
+          <div style={{ position:"absolute",inset:0,opacity:0.035,backgroundImage:`linear-gradient(${c} 1px,transparent 1px),linear-gradient(90deg,${c} 1px,transparent 1px)`,backgroundSize:"40px 40px",pointerEvents:"none" }} />
+          <div style={{ display:"flex",alignItems:"flex-start",justifyContent:"space-between",marginBottom:"1.4rem",position:"relative" }}>
+            <span style={{ fontFamily:"var(--f-body)",fontSize:"0.62rem",letterSpacing:"0.1em",fontWeight:700,padding:"0.28rem 0.85rem",borderRadius:"2rem",background:`${c}20`,border:`1px solid ${c}44`,color:c }}>{techLabel}</span>
+            <button onClick={handleClose} style={{ background:"none",border:"1px solid var(--border)",borderRadius:"50%",width:38,height:38,cursor:"pointer",color:"var(--c-text-dim)",fontSize:"1.1rem",display:"flex",alignItems:"center",justifyContent:"center",transition:"all 0.3s",flexShrink:0,lineHeight:1 }} onMouseEnter={(e)=>{e.currentTarget.style.borderColor=c;e.currentTarget.style.color=c;}} onMouseLeave={(e)=>{e.currentTarget.style.borderColor="var(--border)";e.currentTarget.style.color="var(--c-text-dim)";}}>×</button>
+          </div>
+          <span style={{ fontFamily:"var(--f-body)",fontSize:"0.7rem",letterSpacing:"0.14em",textTransform:"uppercase",color:c,fontWeight:700,opacity:0.85,position:"relative" }}>{p.category}</span>
+          <h2 style={{ fontFamily:"var(--f-display)",fontWeight:800,fontSize:"clamp(1.7rem,3.2vw,2.4rem)",color:"var(--c-text)",letterSpacing:"-0.03em",marginTop:"0.35rem",lineHeight:1.08,position:"relative" }}>{p.title}</h2>
+        </div>
+
+        {/* ── Body ── */}
+        <div style={{ padding:"2rem 2.5rem 2.5rem",display:"grid",gridTemplateColumns:"1fr 210px",gap:"2rem",alignItems:"start" }}>
+          {/* Left — description + CTA buttons */}
+          <div>
+            <p style={{ fontFamily:"var(--f-body)",fontSize:"1rem",lineHeight:1.82,color:"var(--c-text-muted)",fontWeight:300,marginBottom:"2rem" }}>{p.description}</p>
+            <div style={{ display:"flex",gap:"0.85rem",flexWrap:"wrap" }}>
+              {p.live && (
+                <a href={p.live} target="_blank" rel="noopener noreferrer" style={{ display:"inline-flex",alignItems:"center",gap:"0.45rem",textDecoration:"none",fontFamily:"var(--f-body)",fontSize:"0.82rem",fontWeight:700,color:"#0a0a10",background:c,padding:"0.6rem 1.3rem",borderRadius:"2rem",transition:"opacity 0.25s,transform 0.25s",letterSpacing:"0.01em" }} onMouseEnter={(e)=>{e.currentTarget.style.opacity="0.82";e.currentTarget.style.transform="translateY(-1px)";}} onMouseLeave={(e)=>{e.currentTarget.style.opacity="1";e.currentTarget.style.transform="translateY(0)";}}>
+                  <span style={{ fontSize:"0.75rem" }}>↗</span> Live Site
+                </a>
+              )}
+              {p.github && (
+                <a href={p.github} target="_blank" rel="noopener noreferrer" style={{ display:"inline-flex",alignItems:"center",gap:"0.45rem",textDecoration:"none",fontFamily:"var(--f-body)",fontSize:"0.82rem",fontWeight:700,color:c,background:"transparent",padding:"0.6rem 1.3rem",borderRadius:"2rem",border:`1px solid ${c}55`,transition:"all 0.25s",letterSpacing:"0.01em" }} onMouseEnter={(e)=>{e.currentTarget.style.background=`${c}1a`;e.currentTarget.style.borderColor=c;}} onMouseLeave={(e)=>{e.currentTarget.style.background="transparent";e.currentTarget.style.borderColor=`${c}55`;}}>
+                  <span style={{ fontSize:"0.75rem" }}>⌥</span> GitHub
+                </a>
+              )}
+            </div>
+          </div>
+
+          {/* Right — highlights sidebar */}
+          <div style={{ background:`${c}0e`,border:`1px solid ${c}24`,borderRadius:"1.1rem",padding:"1.3rem 1.4rem" }}>
+            <p style={{ fontFamily:"var(--f-body)",fontSize:"0.62rem",letterSpacing:"0.13em",textTransform:"uppercase",color:c,fontWeight:700,marginBottom:"1rem",opacity:0.85 }}>Stack & Features</p>
+            {p.highlights.map((item,i)=>(
+              <div key={i} style={{ display:"flex",alignItems:"center",gap:"0.55rem",marginBottom:"0.65rem",fontFamily:"var(--f-body)",fontSize:"0.8rem",color:"var(--c-text-dim)",lineHeight:1.4 }}>
+                <span style={{ color:c,fontSize:"0.55rem",flexShrink:0 }}>◆</span>{item}
+              </div>
+            ))}
+            <div style={{ borderTop:`1px solid ${c}20`,marginTop:"1.1rem",paddingTop:"1rem",display:"flex",flexDirection:"column",gap:"0.45rem" }}>
+              <p style={{ fontFamily:"var(--f-body)",fontSize:"0.72rem",color:"var(--c-text-dim)" }}><span style={{ color:c,fontWeight:700 }}>Year </span>{p.year}</p>
+              <p style={{ fontFamily:"var(--f-body)",fontSize:"0.72rem",color:"var(--c-text-dim)" }}><span style={{ color:c,fontWeight:700 }}>Role </span>{p.role}</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
   );
 }
 
@@ -961,6 +1080,7 @@ function AppContent() {
   const [navVis, setNavVis] = useState(true);
   const [menuOpen, setMenu] = useState(false);
   const [activeService, setActiveService] = useState(null);
+  const [activeProject, setActiveProject] = useState(null);
   const lastY = useRef(0);
   const onDone = useCallback(() => setLoaded(true), []);
 
@@ -974,12 +1094,6 @@ function AppContent() {
 
   const icons = ["◇", "⬡", "◈", "⟁", "◎", "⬢"];
   const projectColors = ["#fbbf24", "#a78bfa", "#60a5fa", "#00e5a0"];
-  const projectUrls   = [
-    "https://emballageprojet.vercel.app",
-    "https://github.com/Redajebbah/al-atlassia-advisor",
-    "https://github.com/Redajebbah/flow-connect",
-    "https://github.com/Redajebbah/nexagen-studio",
-  ];
   const projectTech   = [
     "Python · Django · Vercel",
     "React · TypeScript · Tailwind",
@@ -1166,9 +1280,10 @@ function AppContent() {
           <SplitText style={{ fontFamily:ff,fontWeight:900,fontSize:"clamp(2rem,4vw,3.2rem)",lineHeight:1.05,letterSpacing:isRTL?"0":"-0.03em",display:"inline-block" }}>{t.portfolio.title}</SplitText>
         </div>
         <div style={{ display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:"1.25rem" }}>
-          {t.portfolio.items.map((p,i)=><ProjectCard key={i} title={p.title} category={p.category} color={projectColors[i]} index={i} url={projectUrls[i]} tech={projectTech[i]} />)}
+          {t.portfolio.items.map((p,i)=><ProjectCard key={i} title={p.title} category={p.category} color={projectColors[i]} index={i} tech={projectTech[i]} onClick={()=>setActiveProject(i)} />)}
         </div>
       </div>
+      {activeProject !== null && <ProjectModal index={activeProject} color={projectColors[activeProject]} onClose={()=>setActiveProject(null)} />}
     </section>
 
     {/* ═══ TESTIMONIALS ═══ */}
