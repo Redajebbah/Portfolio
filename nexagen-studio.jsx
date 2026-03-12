@@ -999,6 +999,11 @@ function AppContent() {
           <button key={s.key} className="nl" onClick={()=>scrollTo(s.key)} style={{ background:"none",border:"none",fontFamily:fb,fontSize:"0.82rem",fontWeight:500,color:T.textMuted,letterSpacing:isRTL?"0":"0.02em",transition:"color 0.3s" }}
             onMouseEnter={(e)=>e.currentTarget.style.color=T.text} onMouseLeave={(e)=>e.currentTarget.style.color=T.textMuted}>{s.label}</button>
         ))}
+        <a href="/ai-agents" style={{ display:"inline-flex",alignItems:"center",gap:"0.35rem",textDecoration:"none",fontFamily:fb,fontSize:"0.82rem",fontWeight:600,color:T.accent,letterSpacing:"0.02em",padding:"0.28rem 0.8rem",borderRadius:"2rem",border:`1px solid ${T.accent}44`,background:`${T.accent}0d`,transition:"all 0.3s",whiteSpace:"nowrap" }}
+          onMouseEnter={(e)=>{e.currentTarget.style.background=T.accent;e.currentTarget.style.color=T.bg;e.currentTarget.style.borderColor=T.accent;}}
+          onMouseLeave={(e)=>{e.currentTarget.style.background=`${T.accent}0d`;e.currentTarget.style.color=T.accent;e.currentTarget.style.borderColor=`${T.accent}44`;}}>
+          <span style={{fontSize:"0.6rem",lineHeight:1}}>✦</span> AI Agents
+        </a>
         <LangSwitcher />
         <ThemeToggle />
         <Magnetic strength={0.2}>
@@ -1017,6 +1022,9 @@ function AppContent() {
       {navSections.map((s,i) => (
         <button key={s.key} onClick={()=>scrollTo(s.key)} style={{ background:"none",border:"none",fontFamily:ff,fontSize:"2rem",fontWeight:800,color:T.text,transform:menuOpen?"translateY(0)":"translateY(20px)",opacity:menuOpen?1:0,transition:`all 0.5s cubic-bezier(.16,1,.3,1) ${i*0.06}s` }}>{s.label}</button>
       ))}
+      <a href="/ai-agents" style={{ display:"inline-flex",alignItems:"center",gap:"0.5rem",textDecoration:"none",fontFamily:ff,fontSize:"1.6rem",fontWeight:800,color:T.accent,transform:menuOpen?"translateY(0)":"translateY(20px)",opacity:menuOpen?1:0,transition:`all 0.5s cubic-bezier(.16,1,.3,1) ${navSections.length*0.06}s`,letterSpacing:"-0.02em" }}>
+        <span style={{fontSize:"0.85rem",lineHeight:1}}>✦</span> AI Agents
+      </a>
       <div style={{ marginTop: "1rem", display:"flex", gap:"1rem", alignItems:"center" }}><LangSwitcher mobile /><ThemeToggle mobile /></div>
     </div>
 
