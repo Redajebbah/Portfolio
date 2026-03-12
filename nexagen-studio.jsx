@@ -51,10 +51,10 @@ const messages = {
     portfolio: {
       label: "Selected Work", title: "Projects that speak.",
       items: [
-        { title: "Meridian AI Dashboard", category: "Data Intelligence" },
-        { title: "Stratos Commerce", category: "E-Commerce Platform" },
-        { title: "Pulse Neural Engine", category: "Machine Learning" },
-        { title: "Vertex Automation", category: "Workflow Systems" },
+        { title: "Emballage Projet",     category: "E-Commerce Platform"  },
+        { title: "Al Atlassia Advisor",  category: "Business Intelligence" },
+        { title: "Flow Connect",         category: "Workflow Platform"     },
+        { title: "Nexagen Studio",       category: "AI-Powered Agency"     },
       ],
     },
     testimonials: {
@@ -107,10 +107,10 @@ const messages = {
     portfolio: {
       label: "Travaux sélectionnés", title: "Des projets qui parlent.",
       items: [
-        { title: "Meridian AI Dashboard", category: "Intelligence des données" },
-        { title: "Stratos Commerce", category: "Plateforme E-Commerce" },
-        { title: "Pulse Neural Engine", category: "Apprentissage automatique" },
-        { title: "Vertex Automation", category: "Systèmes de workflows" },
+        { title: "Emballage Projet",    category: "Plateforme E-Commerce"    },
+        { title: "Al Atlassia Advisor", category: "Intelligence Business"    },
+        { title: "Flow Connect",        category: "Plateforme de Workflow"   },
+        { title: "Nexagen Studio",      category: "Agence IA"                },
       ],
     },
     testimonials: {
@@ -163,10 +163,10 @@ const messages = {
     portfolio: {
       label: "أعمال مختارة", title: "مشاريع تتحدّث عن نفسها.",
       items: [
-        { title: "Meridian AI Dashboard", category: "ذكاء البيانات" },
-        { title: "Stratos Commerce", category: "منصة تجارة إلكترونية" },
-        { title: "Pulse Neural Engine", category: "التعلّم الآلي" },
-        { title: "Vertex Automation", category: "أنظمة سير العمل" },
+        { title: "مشروع التغليف",        category: "منصة تجارة إلكترونية"   },
+        { title: "الأطلسية أدفايزر",     category: "ذكاء الأعمال"           },
+        { title: "فلو كونيكت",           category: "منصة سير العمل"         },
+        { title: "نيكساجن ستوديو",       category: "وكالة الذكاء الاصطناعي" },
       ],
     },
     testimonials: {
@@ -694,21 +694,29 @@ function ProcessItem({ number, title, desc, index }) {
 }
 
 // ═══ PROJECT CARD ═══
-function ProjectCard({ title, category, color, index }) {
+function ProjectCard({ title, category, color, index, url, tech }) {
   const [h, setH] = useState(false);
   const { isRTL } = useT();
   return (
     <Reveal delay={index * 0.1}>
-      <div data-hover onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)} style={{ position:"relative",borderRadius:"1.25rem",overflow:"hidden",cursor:"pointer",aspectRatio:index%3===1?"3/4":"4/5",background:T.bgCard,border:`1px solid ${T.border}` }}>
-        <div style={{ position:"absolute",inset:0,background:`linear-gradient(135deg,${color}22,${color}08)`,transition:"opacity 0.6s",opacity:h?1:0.5 }} />
-        <div style={{ position:"absolute",top:"50%",left:"50%",width:120,height:120,borderRadius:"50%",background:`radial-gradient(circle,${color}30,transparent)`,transform:h?"translate(-50%,-50%) scale(3)":"translate(-50%,-50%) scale(1)",transition:"transform 0.8s cubic-bezier(.16,1,.3,1)",filter:"blur(30px)" }} />
-        <div style={{ position:"absolute",inset:0,opacity:0.04,backgroundImage:`linear-gradient(${color}40 1px,transparent 1px),linear-gradient(90deg,${color}40 1px,transparent 1px)`,backgroundSize:"40px 40px" }} />
-        <div style={{ position:"absolute",bottom:0,left:0,right:0,padding:"2rem",background:"linear-gradient(transparent,rgba(10,10,16,0.88))",textAlign:isRTL?"right":"left" }}>
-          <span style={{ fontFamily:isRTL?"var(--f-ar)":"var(--f-body)",fontSize:"0.65rem",letterSpacing:isRTL?"0":"0.15em",textTransform:isRTL?"none":"uppercase",color,fontWeight:600,opacity:0.9 }}>{category}</span>
-          <h3 style={{ fontFamily:isRTL?"var(--f-ar)":"var(--f-display)",fontWeight:700,fontSize:"1.3rem",color:"#e8e6e1",marginTop:"0.3rem",letterSpacing:isRTL?"0":"-0.01em" }}>{title}</h3>
+      <a href={url} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none",display:"block" }}>
+        <div data-hover onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)} style={{ position:"relative",borderRadius:"1.25rem",overflow:"hidden",cursor:"pointer",aspectRatio:index%3===1?"3/4":"4/5",background:T.bgCard,border:`1px solid ${h?color+"55":T.border}`,transition:"border-color 0.4s, box-shadow 0.4s",boxShadow:h?`0 20px 60px ${color}22`:"none" }}>
+          <div style={{ position:"absolute",inset:0,background:`linear-gradient(135deg,${color}22,${color}08)`,transition:"opacity 0.6s",opacity:h?1:0.5 }} />
+          <div style={{ position:"absolute",top:"50%",left:"50%",width:120,height:120,borderRadius:"50%",background:`radial-gradient(circle,${color}30,transparent)`,transform:h?"translate(-50%,-50%) scale(3)":"translate(-50%,-50%) scale(1)",transition:"transform 0.8s cubic-bezier(.16,1,.3,1)",filter:"blur(30px)" }} />
+          <div style={{ position:"absolute",inset:0,opacity:0.04,backgroundImage:`linear-gradient(${color}40 1px,transparent 1px),linear-gradient(90deg,${color}40 1px,transparent 1px)`,backgroundSize:"40px 40px" }} />
+          {/* Tech stack pill — top left */}
+          {tech && (
+            <div style={{ position:"absolute",top:"1.1rem",[isRTL?"right":"left"]:"1.1rem",fontFamily:"var(--f-body)",fontSize:"0.6rem",letterSpacing:"0.08em",fontWeight:600,padding:"0.22rem 0.65rem",borderRadius:"2rem",background:`${color}22`,border:`1px solid ${color}40`,color,backdropFilter:"blur(8px)",opacity:h?1:0.7,transition:"opacity 0.3s" }}>
+              {tech}
+            </div>
+          )}
+          <div style={{ position:"absolute",bottom:0,left:0,right:0,padding:"2rem",background:"linear-gradient(transparent,rgba(10,10,16,0.92))",textAlign:isRTL?"right":"left" }}>
+            <span style={{ fontFamily:isRTL?"var(--f-ar)":"var(--f-body)",fontSize:"0.65rem",letterSpacing:isRTL?"0":"0.15em",textTransform:isRTL?"none":"uppercase",color,fontWeight:600,opacity:0.9 }}>{category}</span>
+            <h3 style={{ fontFamily:isRTL?"var(--f-ar)":"var(--f-display)",fontWeight:700,fontSize:"1.3rem",color:"#e8e6e1",marginTop:"0.3rem",letterSpacing:isRTL?"0":"-0.01em" }}>{title}</h3>
+          </div>
+          <div style={{ position:"absolute",top:"1.25rem",[isRTL?"left":"right"]:"1.25rem",width:36,height:36,borderRadius:"50%",border:"1px solid rgba(255,255,255,0.2)",display:"flex",alignItems:"center",justifyContent:"center",color:"#e8e6e1",fontSize:"0.9rem",opacity:h?1:0,transform:h?"translate(0,0)":`translate(${isRTL?"-8px":"8px"},-8px)`,transition:"all 0.5s cubic-bezier(.16,1,.3,1)",background:`${color}33`,backdropFilter:"blur(8px)" }}>{isRTL?"↖":"↗"}</div>
         </div>
-        <div style={{ position:"absolute",top:"1.25rem",[isRTL?"left":"right"]:"1.25rem",width:36,height:36,borderRadius:"50%",border:"1px solid rgba(255,255,255,0.2)",display:"flex",alignItems:"center",justifyContent:"center",color:"#e8e6e1",fontSize:"0.9rem",opacity:h?1:0,transform:h?"translate(0,0)":`translate(${isRTL?"-8px":"8px"},-8px)`,transition:"all 0.5s cubic-bezier(.16,1,.3,1)" }}>{isRTL?"↖":"↗"}</div>
-      </div>
+      </a>
     </Reveal>
   );
 }
@@ -965,7 +973,19 @@ function AppContent() {
   const scrollTo = (id) => { setMenu(false); document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); };
 
   const icons = ["◇", "⬡", "◈", "⟁", "◎", "⬢"];
-  const projectColors = ["#00e5a0", "#5eead4", "#f0abfc", "#fbbf24"];
+  const projectColors = ["#fbbf24", "#a78bfa", "#60a5fa", "#00e5a0"];
+  const projectUrls   = [
+    "https://emballageprojet.vercel.app",
+    "https://github.com/Redajebbah/al-atlassia-advisor",
+    "https://github.com/Redajebbah/flow-connect",
+    "https://github.com/Redajebbah/nexagen-studio",
+  ];
+  const projectTech   = [
+    "Python · Django · Vercel",
+    "React · TypeScript · Tailwind",
+    "React · TypeScript · Tailwind",
+    "Next.js 14 · Claude AI · Three.js",
+  ];
   const navSections = [
     { key: "services", label: t.nav.services },
     { key: "about", label: t.nav.about },
@@ -1146,7 +1166,7 @@ function AppContent() {
           <SplitText style={{ fontFamily:ff,fontWeight:900,fontSize:"clamp(2rem,4vw,3.2rem)",lineHeight:1.05,letterSpacing:isRTL?"0":"-0.03em",display:"inline-block" }}>{t.portfolio.title}</SplitText>
         </div>
         <div style={{ display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:"1.25rem" }}>
-          {t.portfolio.items.map((p,i)=><ProjectCard key={i} title={p.title} category={p.category} color={projectColors[i]} index={i} />)}
+          {t.portfolio.items.map((p,i)=><ProjectCard key={i} title={p.title} category={p.category} color={projectColors[i]} index={i} url={projectUrls[i]} tech={projectTech[i]} />)}
         </div>
       </div>
     </section>
