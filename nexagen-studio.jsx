@@ -770,71 +770,88 @@ function ProjectCard({ title, category, color, index, tech, onClick }) {
 // ═══ PROJECT MODAL ═══
 function ProjectModal({ index, color, onClose }) {
   const { isRTL } = useT();
-  const [mounted, setMounted] = useState(false);
-  const [closing, setClosing] = useState(false);
+  const [mounted,  setMounted]  = useState(false);
+  const [closing,  setClosing]  = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const handleClose = useCallback(() => { setClosing(true); setTimeout(() => onClose(), 420); }, [onClose]);
   useEffect(() => {
     requestAnimationFrame(() => setMounted(true));
-    const onKey = (e) => { if (e.key === "Escape") handleClose(); };
+    const onKey   = (e) => { if (e.key === "Escape") handleClose(); };
+    const onResize = () => setIsMobile(window.innerWidth < 620);
+    onResize();
     window.addEventListener("keydown", onKey);
+    window.addEventListener("resize",  onResize);
     document.body.style.overflow = "hidden";
-    return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = ""; };
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize",  onResize);
+      document.body.style.overflow = "";
+    };
   }, [handleClose]);
+
   const p = projectData[index];
   const techLabel = ["Python · Django · Vercel","React · TypeScript · Tailwind","React · TypeScript · Tailwind","Next.js 14 · Claude AI · Three.js"][index];
   const c = color;
   const isVisible = mounted && !closing;
   if (!p) return null;
+
+  const pad = isMobile ? "1.25rem" : "2.5rem";
+
   return (
-    <div onClick={handleClose} style={{ position:"fixed",inset:0,zIndex:10000,background:"rgba(0,0,0,0.78)",backdropFilter:"blur(18px)",WebkitBackdropFilter:"blur(18px)",display:"flex",alignItems:"center",justifyContent:"center",padding:"1.5rem",opacity:isVisible?1:0,transition:"opacity 0.42s cubic-bezier(.4,0,.2,1)" }}>
-      <div onClick={(e)=>e.stopPropagation()} style={{ width:"100%",maxWidth:780,maxHeight:"90vh",overflowY:"auto",borderRadius:"1.75rem",background:"var(--bg-card)",border:"1px solid var(--border)",boxShadow:`0 48px 140px rgba(0,0,0,0.65), 0 0 0 1px ${c}18`,transform:isVisible?"translateY(0) scale(1)":"translateY(64px) scale(0.94)",transition:"transform 0.42s cubic-bezier(.16,1,.3,1), opacity 0.42s",opacity:isVisible?1:0 }}>
+    <div onClick={handleClose} style={{ position:"fixed",inset:0,zIndex:10000,background:"rgba(0,0,0,0.78)",backdropFilter:"blur(18px)",WebkitBackdropFilter:"blur(18px)",display:"flex",alignItems:"center",justifyContent:"center",padding:isMobile?"0.75rem":"1.5rem",opacity:isVisible?1:0,transition:"opacity 0.42s cubic-bezier(.4,0,.2,1)" }}>
+      <div onClick={(e)=>e.stopPropagation()} style={{ width:"100%",maxWidth:780,maxHeight:"92vh",overflowY:"auto",borderRadius:isMobile?"1.25rem":"1.75rem",background:"var(--bg-card)",border:"1px solid var(--border)",boxShadow:`0 48px 140px rgba(0,0,0,0.65), 0 0 0 1px ${c}18`,transform:isVisible?"translateY(0) scale(1)":"translateY(64px) scale(0.94)",transition:"transform 0.42s cubic-bezier(.16,1,.3,1), opacity 0.42s",opacity:isVisible?1:0 }}>
 
         {/* ── Header ── */}
-        <div style={{ background:`linear-gradient(135deg,${c}28 0%,${c}0c 55%,transparent)`,borderBottom:`1px solid ${c}1e`,padding:"2.5rem 2.5rem 2rem",position:"relative",overflow:"hidden",borderRadius:"1.75rem 1.75rem 0 0" }}>
-          <div style={{ position:"absolute",top:"-25%",right:"-8%",width:280,height:280,borderRadius:"50%",background:`radial-gradient(circle,${c}38,transparent 70%)`,filter:"blur(55px)",pointerEvents:"none" }} />
-          <div style={{ position:"absolute",inset:0,opacity:0.035,backgroundImage:`linear-gradient(${c} 1px,transparent 1px),linear-gradient(90deg,${c} 1px,transparent 1px)`,backgroundSize:"40px 40px",pointerEvents:"none" }} />
-          <div style={{ display:"flex",alignItems:"flex-start",justifyContent:"space-between",marginBottom:"1.4rem",position:"relative" }}>
-            <span style={{ fontFamily:"var(--f-body)",fontSize:"0.62rem",letterSpacing:"0.1em",fontWeight:700,padding:"0.28rem 0.85rem",borderRadius:"2rem",background:`${c}20`,border:`1px solid ${c}44`,color:c }}>{techLabel}</span>
-            <button onClick={handleClose} style={{ background:"none",border:"1px solid var(--border)",borderRadius:"50%",width:38,height:38,cursor:"pointer",color:"var(--c-text-dim)",fontSize:"1.1rem",display:"flex",alignItems:"center",justifyContent:"center",transition:"all 0.3s",flexShrink:0,lineHeight:1 }} onMouseEnter={(e)=>{e.currentTarget.style.borderColor=c;e.currentTarget.style.color=c;}} onMouseLeave={(e)=>{e.currentTarget.style.borderColor="var(--border)";e.currentTarget.style.color="var(--c-text-dim)";}}>×</button>
+        <div style={{ background:`linear-gradient(135deg,${c}28 0%,${c}0c 55%,transparent)`,borderBottom:`1px solid ${c}1e`,padding:`${isMobile?"1.5rem":pad} ${pad} ${isMobile?"1.25rem":"2rem"}`,position:"relative",overflow:"hidden",borderRadius:isMobile?"1.25rem 1.25rem 0 0":"1.75rem 1.75rem 0 0" }}>
+          <div style={{ position:"absolute",top:"-25%",right:"-8%",width:220,height:220,borderRadius:"50%",background:`radial-gradient(circle,${c}35,transparent 70%)`,filter:"blur(50px)",pointerEvents:"none" }} />
+          <div style={{ position:"absolute",inset:0,opacity:0.03,backgroundImage:`linear-gradient(${c} 1px,transparent 1px),linear-gradient(90deg,${c} 1px,transparent 1px)`,backgroundSize:"40px 40px",pointerEvents:"none" }} />
+          {/* badge row */}
+          <div style={{ display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:"1.1rem",position:"relative",gap:"0.75rem" }}>
+            <span style={{ fontFamily:"var(--f-body)",fontSize:isMobile?"0.58rem":"0.62rem",letterSpacing:"0.09em",fontWeight:700,padding:"0.25rem 0.75rem",borderRadius:"2rem",background:`${c}20`,border:`1px solid ${c}44`,color:c,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis",maxWidth:"72%" }}>{techLabel}</span>
+            <button onClick={handleClose} style={{ background:"none",border:"1px solid var(--border)",borderRadius:"50%",width:36,height:36,cursor:"pointer",color:"var(--c-text-dim)",fontSize:"1.1rem",display:"flex",alignItems:"center",justifyContent:"center",transition:"all 0.3s",flexShrink:0,lineHeight:1 }} onMouseEnter={(e)=>{e.currentTarget.style.borderColor=c;e.currentTarget.style.color=c;}} onMouseLeave={(e)=>{e.currentTarget.style.borderColor="var(--border)";e.currentTarget.style.color="var(--c-text-dim)";}}>×</button>
           </div>
-          <span style={{ fontFamily:"var(--f-body)",fontSize:"0.7rem",letterSpacing:"0.14em",textTransform:"uppercase",color:c,fontWeight:700,opacity:0.85,position:"relative" }}>{p.category}</span>
-          <h2 style={{ fontFamily:"var(--f-display)",fontWeight:800,fontSize:"clamp(1.7rem,3.2vw,2.4rem)",color:"var(--c-text)",letterSpacing:"-0.03em",marginTop:"0.35rem",lineHeight:1.08,position:"relative" }}>{p.title}</h2>
+          <span style={{ fontFamily:"var(--f-body)",fontSize:"0.68rem",letterSpacing:"0.13em",textTransform:"uppercase",color:c,fontWeight:700,opacity:0.85,position:"relative" }}>{p.category}</span>
+          <h2 style={{ fontFamily:"var(--f-display)",fontWeight:800,fontSize:isMobile?"1.55rem":"clamp(1.7rem,3.2vw,2.4rem)",color:"var(--c-text)",letterSpacing:"-0.03em",marginTop:"0.3rem",lineHeight:1.1,position:"relative" }}>{p.title}</h2>
         </div>
 
         {/* ── Body ── */}
-        <div style={{ padding:"2rem 2.5rem 2.5rem",display:"grid",gridTemplateColumns:"1fr 210px",gap:"2rem",alignItems:"start" }}>
-          {/* Left — description + CTA buttons */}
-          <div>
-            <p style={{ fontFamily:"var(--f-body)",fontSize:"1rem",lineHeight:1.82,color:"var(--c-text-muted)",fontWeight:300,marginBottom:"2rem" }}>{p.description}</p>
-            <div style={{ display:"flex",gap:"0.85rem",flexWrap:"wrap" }}>
+        <div style={{ padding:`1.5rem ${pad} ${isMobile?"1.5rem":"2.5rem"}`,display:"flex",flexDirection:isMobile?"column":"row",gap:isMobile?"1.25rem":"2rem",alignItems:"start" }}>
+
+          {/* Description + CTA */}
+          <div style={{ flex:1,minWidth:0 }}>
+            <p style={{ fontFamily:"var(--f-body)",fontSize:isMobile?"0.92rem":"1rem",lineHeight:1.78,color:"var(--c-text-muted)",fontWeight:300,marginBottom:"1.5rem" }}>{p.description}</p>
+            <div style={{ display:"flex",gap:"0.75rem",flexWrap:"wrap" }}>
               {p.live && (
-                <a href={p.live} target="_blank" rel="noopener noreferrer" style={{ display:"inline-flex",alignItems:"center",gap:"0.45rem",textDecoration:"none",fontFamily:"var(--f-body)",fontSize:"0.82rem",fontWeight:700,color:"#0a0a10",background:c,padding:"0.6rem 1.3rem",borderRadius:"2rem",transition:"opacity 0.25s,transform 0.25s",letterSpacing:"0.01em" }} onMouseEnter={(e)=>{e.currentTarget.style.opacity="0.82";e.currentTarget.style.transform="translateY(-1px)";}} onMouseLeave={(e)=>{e.currentTarget.style.opacity="1";e.currentTarget.style.transform="translateY(0)";}}>
-                  <span style={{ fontSize:"0.75rem" }}>↗</span> Live Site
+                <a href={p.live} target="_blank" rel="noopener noreferrer" style={{ display:"inline-flex",alignItems:"center",gap:"0.4rem",textDecoration:"none",fontFamily:"var(--f-body)",fontSize:"0.82rem",fontWeight:700,color:"#0a0a10",background:c,padding:"0.55rem 1.2rem",borderRadius:"2rem",transition:"opacity 0.25s,transform 0.25s",letterSpacing:"0.01em",whiteSpace:"nowrap" }} onMouseEnter={(e)=>{e.currentTarget.style.opacity="0.82";e.currentTarget.style.transform="translateY(-1px)";}} onMouseLeave={(e)=>{e.currentTarget.style.opacity="1";e.currentTarget.style.transform="translateY(0)";}}>
+                  <span style={{ fontSize:"0.72rem" }}>↗</span> Live Site
                 </a>
               )}
               {p.github && (
-                <a href={p.github} target="_blank" rel="noopener noreferrer" style={{ display:"inline-flex",alignItems:"center",gap:"0.45rem",textDecoration:"none",fontFamily:"var(--f-body)",fontSize:"0.82rem",fontWeight:700,color:c,background:"transparent",padding:"0.6rem 1.3rem",borderRadius:"2rem",border:`1px solid ${c}55`,transition:"all 0.25s",letterSpacing:"0.01em" }} onMouseEnter={(e)=>{e.currentTarget.style.background=`${c}1a`;e.currentTarget.style.borderColor=c;}} onMouseLeave={(e)=>{e.currentTarget.style.background="transparent";e.currentTarget.style.borderColor=`${c}55`;}}>
-                  <span style={{ fontSize:"0.75rem" }}>⌥</span> GitHub
+                <a href={p.github} target="_blank" rel="noopener noreferrer" style={{ display:"inline-flex",alignItems:"center",gap:"0.4rem",textDecoration:"none",fontFamily:"var(--f-body)",fontSize:"0.82rem",fontWeight:700,color:c,background:"transparent",padding:"0.55rem 1.2rem",borderRadius:"2rem",border:`1px solid ${c}55`,transition:"all 0.25s",letterSpacing:"0.01em",whiteSpace:"nowrap" }} onMouseEnter={(e)=>{e.currentTarget.style.background=`${c}1a`;e.currentTarget.style.borderColor=c;}} onMouseLeave={(e)=>{e.currentTarget.style.background="transparent";e.currentTarget.style.borderColor=`${c}55`;}}>
+                  <span style={{ fontSize:"0.72rem" }}>⌥</span> GitHub
                 </a>
               )}
             </div>
           </div>
 
-          {/* Right — highlights sidebar */}
-          <div style={{ background:`${c}0e`,border:`1px solid ${c}24`,borderRadius:"1.1rem",padding:"1.3rem 1.4rem" }}>
-            <p style={{ fontFamily:"var(--f-body)",fontSize:"0.62rem",letterSpacing:"0.13em",textTransform:"uppercase",color:c,fontWeight:700,marginBottom:"1rem",opacity:0.85 }}>Stack & Features</p>
-            {p.highlights.map((item,i)=>(
-              <div key={i} style={{ display:"flex",alignItems:"center",gap:"0.55rem",marginBottom:"0.65rem",fontFamily:"var(--f-body)",fontSize:"0.8rem",color:"var(--c-text-dim)",lineHeight:1.4 }}>
-                <span style={{ color:c,fontSize:"0.55rem",flexShrink:0 }}>◆</span>{item}
-              </div>
-            ))}
-            <div style={{ borderTop:`1px solid ${c}20`,marginTop:"1.1rem",paddingTop:"1rem",display:"flex",flexDirection:"column",gap:"0.45rem" }}>
+          {/* Highlights sidebar — full width on mobile, fixed 200px on desktop */}
+          <div style={{ background:`${c}0e`,border:`1px solid ${c}24`,borderRadius:"1rem",padding:"1.2rem 1.35rem",width:isMobile?"100%":200,flexShrink:0 }}>
+            {/* On mobile: two-column pill grid for the highlights */}
+            <p style={{ fontFamily:"var(--f-body)",fontSize:"0.6rem",letterSpacing:"0.13em",textTransform:"uppercase",color:c,fontWeight:700,marginBottom:"0.9rem",opacity:0.85 }}>Stack & Features</p>
+            <div style={{ display:"grid",gridTemplateColumns:isMobile?"1fr 1fr":"1fr",gap:isMobile?"0.5rem":"0" }}>
+              {p.highlights.map((item,i)=>(
+                <div key={i} style={{ display:"flex",alignItems:"center",gap:"0.5rem",marginBottom:isMobile?"0":"0.6rem",fontFamily:"var(--f-body)",fontSize:"0.78rem",color:"var(--c-text-dim)",lineHeight:1.4,background:isMobile?`${c}10`:"transparent",borderRadius:isMobile?"0.5rem":"0",padding:isMobile?"0.35rem 0.55rem":"0",border:isMobile?`1px solid ${c}1a`:"none" }}>
+                  <span style={{ color:c,fontSize:"0.5rem",flexShrink:0 }}>◆</span>{item}
+                </div>
+              ))}
+            </div>
+            <div style={{ borderTop:`1px solid ${c}20`,marginTop:"1rem",paddingTop:"0.9rem",display:"flex",flexDirection:isMobile?"row":"column",gap:isMobile?"1.5rem":"0.4rem" }}>
               <p style={{ fontFamily:"var(--f-body)",fontSize:"0.72rem",color:"var(--c-text-dim)" }}><span style={{ color:c,fontWeight:700 }}>Year </span>{p.year}</p>
               <p style={{ fontFamily:"var(--f-body)",fontSize:"0.72rem",color:"var(--c-text-dim)" }}><span style={{ color:c,fontWeight:700 }}>Role </span>{p.role}</p>
             </div>
           </div>
-        </div>
 
+        </div>
       </div>
     </div>
   );
