@@ -254,8 +254,8 @@ const CERTIFICATIONS = [
     color: "#3FB950",
     avatar: "GL",
     avatarBg: "#0D1117",
-    url: null,
-    credId: "Z9KJPV31Y5",
+    url: "https://www.mygreatlearning.com/certificate/FRICHCFH",
+    credId: "FRICHCFH",
     img: "/certs/cert-gl-copilot.jpg",
   },
   {
