@@ -208,6 +208,7 @@ const CERTIFICATIONS = [
     avatarBg: "#011F5B",
     url: "https://coursera.org/verify/XMJYLXKWTN5X",
     credId: "XMJYLXKWTN5X",
+    img: "/certs/cert-upenn-java.jpg",
   },
   {
     title: "Programming for Everybody — Getting Started with Python",
@@ -219,6 +220,7 @@ const CERTIFICATIONS = [
     avatarBg: "#00274C",
     url: "https://coursera.org/verify/TKNUPR2SPULN",
     credId: "TKNUPR2SPULN",
+    img: "/certs/cert-umich-python.jpg",
   },
   {
     title: "Software Engineering: Modeling Systems using UML",
@@ -230,6 +232,7 @@ const CERTIFICATIONS = [
     avatarBg: "#003566",
     url: "https://coursera.org/verify/89LZGWJZYM3Z",
     credId: "89LZGWJZYM3Z",
+    img: "/certs/cert-hkust-uml.jpg",
   },
   {
     title: "React Native",
@@ -241,6 +244,7 @@ const CERTIFICATIONS = [
     avatarBg: "#0A0A2E",
     url: "https://coursera.org/verify/P82EZUGYJH43",
     credId: "P82EZUGYJH43",
+    img: "/certs/cert-meta-react-native.jpg",
   },
   {
     title: "Getting Started with GitHub Copilot",
@@ -252,6 +256,7 @@ const CERTIFICATIONS = [
     avatarBg: "#0D1117",
     url: null,
     credId: "Z9KJPV31Y5",
+    img: "/certs/cert-gl-copilot.jpg",
   },
   {
     title: "React Basics",
@@ -263,6 +268,7 @@ const CERTIFICATIONS = [
     avatarBg: "#0A0A2E",
     url: "https://coursera.org/verify/Z3V98LATD5EB",
     credId: "Z3V98LATD5EB",
+    img: "/certs/cert-meta-react-basics.jpg",
   },
 ];
 
@@ -448,23 +454,49 @@ const CSS = `
   .pf-sk-item{font-family:'Fira Code',monospace;font-size:0.7rem;padding:0.22rem 0.5rem;border-radius:4px;border:1px solid;background:rgba(0,0,0,0.25)}
 
   /* CERTS */
-  .pf-certs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3.5rem}
-  .pf-cert-card{background:rgba(255,255,255,0.023);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:1.75rem;position:relative;overflow:hidden;cursor:default;display:flex;flex-direction:column;opacity:0;transform:translateY(30px);transition:opacity 0.55s ease,transform 0.55s ease,border-color 0.3s ease,box-shadow 0.3s ease}
+  .pf-certs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
+  .pf-cert-card{background:rgba(255,255,255,0.023);border:1px solid rgba(255,255,255,0.07);border-radius:16px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;opacity:0;transform:translateY(30px);transition:opacity 0.55s ease,transform 0.55s ease,border-color 0.3s ease,box-shadow 0.3s ease}
   .pf-cert-card.on{opacity:1;transform:translateY(0)}
-  .pf-cert-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cc),transparent);opacity:0.65;transition:opacity 0.3s}
-  .pf-cert-card:hover{border-color:rgba(255,255,255,0.13);box-shadow:0 18px 52px rgba(0,0,0,0.45);transform:translateY(-6px)!important}
-  .pf-cert-card:hover::before{opacity:1}
-  .pf-cert-card:hover .pf-cert-avatar{transform:scale(1.08) rotate(-3deg)}
-  .pf-cert-platform{display:inline-flex;align-items:center;gap:0.35rem;font-family:'Fira Code',monospace;font-size:0.63rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--cc);margin-bottom:1.1rem}
+  .pf-cert-card:hover{border-color:rgba(255,255,255,0.16);box-shadow:0 20px 56px rgba(0,0,0,0.55);transform:translateY(-7px)!important}
+  .pf-cert-card:hover .pf-cert-img-wrap img{transform:scale(1.04)}
+  .pf-cert-card:hover .pf-cert-eye{opacity:1;transform:translate(-50%,-50%) scale(1)}
+  /* Image area */
+  .pf-cert-img-wrap{position:relative;width:100%;aspect-ratio:4/3;overflow:hidden;background:#0a0a14}
+  .pf-cert-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:transform 0.5s ease}
+  .pf-cert-img-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 55%,rgba(3,3,10,0.85) 100%);pointer-events:none}
+  .pf-cert-eye{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.8);width:48px;height:48px;border-radius:50%;background:rgba(0,0,0,0.72);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.25s ease,transform 0.25s ease;color:#fff;font-size:1.1rem}
+  /* Card body */
+  .pf-cert-body{padding:1.2rem 1.35rem 1.35rem;display:flex;flex-direction:column;flex:1}
+  .pf-cert-platform{display:inline-flex;align-items:center;gap:0.35rem;font-family:'Fira Code',monospace;font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--cc);margin-bottom:0.75rem}
   .pf-cert-platform-dot{width:5px;height:5px;border-radius:50%;background:var(--cc);flex-shrink:0;animation:pfPulse 2.5s ease-in-out infinite}
-  .pf-cert-avatar{width:44px;height:44px;border-radius:10px;background:var(--cab);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-family:'Space Grotesk',sans-serif;font-size:0.6rem;font-weight:800;color:rgba(255,255,255,0.85);letter-spacing:0.02em;flex-shrink:0;transition:transform 0.35s ease;text-align:center;line-height:1.2}
-  .pf-cert-issuer{font-size:0.68rem;color:rgba(255,255,255,0.32);margin-bottom:0.3rem;font-family:'Fira Code',monospace;letter-spacing:0.06em}
-  .pf-cert-title-text{font-family:'Space Grotesk',sans-serif;font-size:0.93rem;font-weight:700;color:#e2e0ea;line-height:1.35;margin-bottom:1rem;flex:1}
-  .pf-cert-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;margin-top:auto}
-  .pf-cert-date{font-family:'Fira Code',monospace;font-size:0.66rem;color:#44445a}
-  .pf-cert-verify{display:inline-flex;align-items:center;gap:0.3rem;font-size:0.65rem;font-family:'Fira Code',monospace;color:var(--cc);text-decoration:none;border:1px solid;border-color:color-mix(in srgb,var(--cc) 30%,transparent);border-radius:100px;padding:0.22rem 0.6rem;transition:all 0.2s}
-  .pf-cert-verify:hover{background:color-mix(in srgb,var(--cc) 10%,transparent);gap:0.5rem}
-  .pf-cert-credid{font-size:0.6rem;color:#33334a;font-family:'Fira Code',monospace;margin-top:0.45rem;letter-spacing:0.04em}
+  .pf-cert-issuer{font-size:0.68rem;color:rgba(255,255,255,0.3);margin-bottom:0.25rem;font-family:'Fira Code',monospace}
+  .pf-cert-title-text{font-family:'Space Grotesk',sans-serif;font-size:0.9rem;font-weight:700;color:#e2e0ea;line-height:1.35;margin-bottom:0.9rem;flex:1}
+  .pf-cert-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.4rem;margin-top:auto;padding-top:0.75rem;border-top:1px solid rgba(255,255,255,0.04)}
+  .pf-cert-date{font-family:'Fira Code',monospace;font-size:0.64rem;color:#44445a}
+  .pf-cert-verify{display:inline-flex;align-items:center;gap:0.3rem;font-size:0.64rem;font-family:'Fira Code',monospace;color:var(--cc);text-decoration:none;border:1px solid;border-color:color-mix(in srgb,var(--cc) 28%,transparent);border-radius:100px;padding:0.2rem 0.6rem;transition:all 0.2s;cursor:pointer}
+  .pf-cert-verify:hover{background:color-mix(in srgb,var(--cc) 12%,transparent)}
+  .pf-cert-credid{font-size:0.59rem;color:#2d2d42;font-family:'Fira Code',monospace;margin-top:0.35rem}
+  /* LIGHTBOX */
+  .pf-lb{position:fixed;inset:0;z-index:9000;display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity 0.28s ease}
+  .pf-lb.open{opacity:1;pointer-events:all}
+  .pf-lb-bg{position:absolute;inset:0;background:rgba(0,0,0,0.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);cursor:zoom-out}
+  .pf-lb-panel{position:relative;max-width:900px;width:100%;max-height:90vh;background:#0d0d1a;border:1px solid rgba(255,255,255,0.1);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transform:scale(0.93) translateY(18px);transition:transform 0.3s ease;box-shadow:0 40px 100px rgba(0,0,0,0.8)}
+  .pf-lb.open .pf-lb-panel{transform:scale(1) translateY(0)}
+  .pf-lb-img{width:100%;max-height:68vh;object-fit:contain;object-position:top;background:#07071a;display:block}
+  .pf-lb-foot{padding:1.1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;border-top:1px solid rgba(255,255,255,0.07)}
+  .pf-lb-info{flex:1}
+  .pf-lb-issuer{font-size:0.7rem;color:rgba(255,255,255,0.35);font-family:'Fira Code',monospace;margin-bottom:0.2rem}
+  .pf-lb-title{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:700;color:#e2e0ea}
+  .pf-lb-actions{display:flex;gap:0.6rem;flex-shrink:0}
+  .pf-lb-btn{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.78rem;font-family:'Fira Code',monospace;padding:0.45rem 1rem;border-radius:8px;cursor:pointer;transition:all 0.2s;text-decoration:none;border:1px solid}
+  .pf-lb-btn-v{background:rgba(0,212,255,0.1);border-color:rgba(0,212,255,0.3);color:#00d4ff}
+  .pf-lb-btn-v:hover{background:rgba(0,212,255,0.18)}
+  .pf-lb-btn-x{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.1);color:#8888a0}
+  .pf-lb-btn-x:hover{background:rgba(255,255,255,0.08);color:#e2e0ea}
+  .pf-lb-nav{position:absolute;top:50%;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,0.65);border:1px solid rgba(255,255,255,0.12);color:#e2e0ea;cursor:pointer;font-size:1rem;transition:all 0.2s;user-select:none;z-index:2}
+  .pf-lb-nav:hover{background:rgba(255,255,255,0.1)}
+  .pf-lb-nav.prev{left:1rem}
+  .pf-lb-nav.next{right:1rem}
   /* Marquee */
   .pf-cert-marquee-wrap{overflow:hidden;margin-top:3rem;-webkit-mask-image:linear-gradient(90deg,transparent,black 12%,black 88%,transparent);mask-image:linear-gradient(90deg,transparent,black 12%,black 88%,transparent)}
   .pf-cert-marquee{display:flex;width:max-content;animation:pfMarquee 22s linear infinite}
@@ -1543,6 +1575,7 @@ function Skills() {
 function Certifications() {
   const [hRef, hOn] = useReveal(0.1);
   const [gridRef, gridOn] = useReveal(0.05);
+  const [lbIndex, setLbIndex] = useState(null); // null = closed
 
   const MARQUEE_ITEMS = [
     "University of Pennsylvania",
@@ -1554,6 +1587,25 @@ function Certifications() {
     "Coursera",
   ];
 
+  const openLb = useCallback((i) => setLbIndex(i), []);
+  const closeLb = useCallback(() => setLbIndex(null), []);
+  const prevLb = useCallback(() => setLbIndex(i => (i - 1 + CERTIFICATIONS.length) % CERTIFICATIONS.length), []);
+  const nextLb = useCallback(() => setLbIndex(i => (i + 1) % CERTIFICATIONS.length), []);
+
+  // Keyboard navigation for lightbox
+  useEffect(() => {
+    if (lbIndex === null) return;
+    const handler = (e) => {
+      if (e.key === "Escape") closeLb();
+      if (e.key === "ArrowLeft") prevLb();
+      if (e.key === "ArrowRight") nextLb();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [lbIndex, closeLb, prevLb, nextLb]);
+
+  const activeCert = lbIndex !== null ? CERTIFICATIONS[lbIndex] : null;
+
   return (
     <section id="certifications" style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}>
       <div className="pf-sec">
@@ -1564,58 +1616,56 @@ function Certifications() {
             <p className="pf-sec-lbl">// Credentials</p>
             <h2 className="pf-sec-h">Certified by <em>the Best.</em></h2>
             <p className="pf-sec-sub">
-              6 verified credentials from top universities and industry leaders — every one earned, every one linked.
+              6 verified credentials from top universities and industry leaders — click any to view the full certificate.
             </p>
           </div>
         </div>
 
+        {/* Certificate cards grid */}
         <div ref={gridRef} className="pf-certs-grid">
           {CERTIFICATIONS.map((c, i) => (
             <div
               key={i}
               className={`pf-cert-card${gridOn ? " on" : ""}`}
-              style={{
-                "--cc": c.color,
-                "--cab": c.avatarBg,
-                transitionDelay: gridOn ? `${i * 0.08}s` : "0s",
-              }}
+              style={{ "--cc": c.color, transitionDelay: gridOn ? `${i * 0.08}s` : "0s" }}
+              onClick={() => openLb(i)}
+              role="button"
+              aria-label={`View certificate: ${c.title}`}
             >
-              {/* Platform badge */}
-              <div className="pf-cert-platform">
-                <span className="pf-cert-platform-dot" />
-                {c.platform}
+              {/* Certificate image thumbnail */}
+              <div className="pf-cert-img-wrap">
+                <img src={c.img} alt={c.title} loading="lazy" />
+                <div className="pf-cert-img-overlay" />
+                <div className="pf-cert-eye">👁</div>
               </div>
 
-              {/* Issuer avatar */}
-              <div className="pf-cert-avatar">{c.avatar}</div>
-
-              {/* Issuer name */}
-              <div className="pf-cert-issuer">{c.issuer}</div>
-
-              {/* Course title */}
-              <div className="pf-cert-title-text">{c.title}</div>
-
-              {/* Date + Verify */}
-              <div className="pf-cert-bottom">
-                <span className="pf-cert-date">{c.date}</span>
-                {c.url ? (
-                  <a
-                    href={c.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="pf-cert-verify"
-                  >
-                    Verify ↗
-                  </a>
-                ) : (
-                  <span className="pf-cert-verify" style={{ cursor: "default", opacity: 0.55 }}>
-                    {c.credId}
-                  </span>
-                )}
+              {/* Card body */}
+              <div className="pf-cert-body">
+                <div className="pf-cert-platform">
+                  <span className="pf-cert-platform-dot" />
+                  {c.platform}
+                </div>
+                <div className="pf-cert-issuer">{c.issuer}</div>
+                <div className="pf-cert-title-text">{c.title}</div>
+                <div className="pf-cert-bottom">
+                  <span className="pf-cert-date">{c.date}</span>
+                  {c.url ? (
+                    <a
+                      href={c.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="pf-cert-verify"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      Verify ↗
+                    </a>
+                  ) : (
+                    <span className="pf-cert-verify" style={{ opacity: 0.5, cursor: "default" }}>
+                      {c.credId}
+                    </span>
+                  )}
+                </div>
               </div>
-
-              {/* Credential ID */}
-              <div className="pf-cert-credid">ID · {c.credId}</div>
             </div>
           ))}
         </div>
@@ -1631,7 +1681,47 @@ function Certifications() {
             ))}
           </div>
         </div>
+      </div>
 
+      {/* ── LIGHTBOX ── */}
+      <div className={`pf-lb${lbIndex !== null ? " open" : ""}`} role="dialog" aria-modal="true">
+        <div className="pf-lb-bg" onClick={closeLb} />
+        {activeCert && (
+          <div className="pf-lb-panel">
+            {/* Prev / Next */}
+            <button className="pf-lb-nav prev" onClick={prevLb} aria-label="Previous">‹</button>
+            <button className="pf-lb-nav next" onClick={nextLb} aria-label="Next">›</button>
+
+            {/* Full certificate image */}
+            <img
+              key={lbIndex}
+              src={activeCert.img}
+              alt={activeCert.title}
+              className="pf-lb-img"
+            />
+
+            {/* Footer */}
+            <div className="pf-lb-foot">
+              <div className="pf-lb-info">
+                <div className="pf-lb-issuer">{activeCert.issuer} · {activeCert.date}</div>
+                <div className="pf-lb-title">{activeCert.title}</div>
+              </div>
+              <div className="pf-lb-actions">
+                {activeCert.url && (
+                  <a
+                    href={activeCert.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="pf-lb-btn pf-lb-btn-v"
+                  >
+                    ✓ Verify on Coursera ↗
+                  </a>
+                )}
+                <button className="pf-lb-btn pf-lb-btn-x" onClick={closeLb}>✕ Close</button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
