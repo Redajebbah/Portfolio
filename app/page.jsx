@@ -1,7 +1,7 @@
 "use client";
 
-import NexagenStudio from "../nexagen-studio";
+import Portfolio from "../portfolio";
 
 export default function Page() {
-  return <NexagenStudio />;
+  return <Portfolio />;
 }
