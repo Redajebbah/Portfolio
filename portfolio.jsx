@@ -256,7 +256,7 @@ const CERTIFICATIONS = [
     avatarBg: "#0D1117",
     url: "https://www.mygreatlearning.com/certificate/FRICHCFH",
     credId: "FRICHCFH",
-    img: "/certs/cert-gl-copilot.jpg",
+    img: "/certs/cert-gl-copilot2.jpg",
   },
   {
     title: "React Basics",
