@@ -10,9 +10,14 @@ import * as THREE from "three";
 // ─── PROFILE ─────────────────────────────────────────────────
 const PROFILE = {
   name: "Reda Jebbah",
-  title: "AI & Automation Engineer",
-  roles: ["AI & Automation Engineer", "QA Test Specialist", "Full-Stack Developer", "ML Enthusiast"],
-  bio: "Engineer specialized in software quality, test automation, and AI systems. I build intelligent solutions — from conversational AI deployed in production to industrial supervision platforms for Morocco's largest companies.",
+  title: "QA Engineer & AI Automation Specialist",
+  roles: [
+    "QA Engineer & Automation Specialist",
+    "AI-Powered Test Engineer",
+    "Cypress · Selenium · LLM",
+    "Building Quality at Scale",
+  ],
+  bio: "QA Engineer specializing in AI-powered test automation — I build intelligent systems that generate, execute, and maintain test suites at scale, helping engineering teams ship faster with zero regressions.",
   email: "redajebbah1@gmail.com",
   phone: "+212 695 15 13 13",
   linkedin: "https://www.linkedin.com/in/reda-jebbah-010392276/",
@@ -22,54 +27,56 @@ const PROFILE = {
 };
 
 const STATS = [
-  { value: 80, suffix: "+", label: "Test Scenarios" },
-  { value: 40, suffix: "%", label: "Processing Time Saved" },
-  { value: 60, suffix: "%", label: "Manual Testing Reduced" },
-  { value: 6, suffix: "+", label: "Certifications" },
+  { value: 120, suffix: "+", label: "Test Cases Authored" },
+  { value: 60, suffix: "%", label: "Regression Time Eliminated" },
+  { value: 3,  suffix: "×", label: "Faster via AI Generation" },
+  { value: 6,  suffix: "+", label: "Certifications Earned" },
 ];
 
 const EXPERIENCES = [
   {
-    company: "Atlanta Sanad Assurance",
-    role: "AI & Chatbot Developer",
-    type: "Freelance",
-    period: "Oct 2025 – Mar 2026",
+    company: "OCP Groupe",
+    role: "QA & Software Engineer",
+    type: "End-of-Studies Internship",
+    period: "Mar 2025 – Sep 2025",
     color: "#00d4ff",
-    description: "Designed and deployed a production conversational AI chatbot for a leading Moroccan insurance group, automating client intake and 24/7 lead qualification.",
+    description: "Delivered a mission-critical industrial supervision platform for the world's #1 phosphate producer — with comprehensive multi-layer QA coverage across API, E2E, and performance, in an Agile/Scrum environment.",
     highlights: [
-      "Built NLP-powered chatbot reducing advisor processing time by ~40%",
-      "Engineered personalized AI interaction for round-the-clock client qualification",
-      "Improved lead capture rate by +25% through optimized conversion funnel",
+      "Architected real-time TRS/OEE monitoring system — Spring Boot + Angular integrated with OSIsoft PI System",
+      "Executed 80+ structured test scenarios (Cypress E2E, JMeter performance, Postman API) with full Xray BDD traceability",
+      "Caught and resolved 15+ critical defects pre-production — zero post-deploy incidents across 6 months",
+      "Led 2-week sprint QA cycles with structured defect reporting, Jira tracking, and stakeholder test summaries",
     ],
-    tags: ["Python", "NLP", "Django", "Chatbot", "AI"],
+    tags: ["Cypress", "JMeter", "Postman", "Xray", "Spring Boot", "Angular", "PI System", "Scrum"],
   },
   {
-    company: "OCP Groupe",
-    role: "Software Dev & Test Engineer",
-    type: "Internship",
-    period: "Mar 2025 – Sep 2025",
+    company: "Atlanta Sanad Assurance",
+    role: "AI Chatbot Developer",
+    type: "Freelance Project",
+    period: "Oct 2025 – Mar 2026",
     color: "#7c3aed",
-    description: "Built an industrial supervision platform for the world's leading phosphate producer, integrating PI System with comprehensive multi-layer test coverage.",
+    description: "Designed and shipped a production-grade NLP chatbot for a leading Moroccan insurance group — automating client intake and lead qualification 24/7, handling Arabic and French conversations.",
     highlights: [
-      "Developed industrial supervision solution — Spring Boot & Angular + PI System",
-      "Implemented real-time TRS indicator calculation for production monitoring",
-      "Executed 80+ test scenarios across API, E2E, and performance layers",
-      "Managed anomaly tracking via Xray in an Agile/Scrum environment",
+      "Built bilingual (Arabic/French) intent-detection pipeline in Python + spaCy — cut advisor response time by 40%",
+      "Increased lead conversion rate by +25% through AI-optimized conversation flow design",
+      "Containerized and deployed to production via Docker — 99% uptime over 5 months of live operation",
+      "Integrated seamless advisor handoff logic for edge cases, maintaining high client satisfaction",
     ],
-    tags: ["Spring Boot", "Angular", "Cypress", "JMeter", "Postman", "PI System"],
+    tags: ["Python", "spaCy", "NLP", "Django", "Docker", "Arabic NLP", "REST API"],
   },
   {
     company: "Active Digital",
-    role: "Test & Automation Engineer",
+    role: "Test Automation Engineer",
     type: "Internship",
     period: "Jul – Sep 2024",
     color: "#f72585",
-    description: "Transformed manual QA processes into an automated regression pipeline, drastically cutting testing time and improving release confidence.",
+    description: "Replaced a fully manual QA workflow with a structured Selenium automation framework — slashing testing time by 60% and introducing the team's first CI-ready test infrastructure.",
     highlights: [
-      "Designed and executed functional test scenarios for production systems",
-      "Built Selenium regression suite reducing manual testing time by ~60%",
+      "Designed 50+ functional and regression test cases across 3 core application modules",
+      "Built Selenium + Python framework reducing manual testing effort by ~60% per release cycle",
+      "Introduced Allure reporting for team-wide QA visibility — first structured test documentation in the company",
     ],
-    tags: ["Selenium", "Python", "Regression Testing", "QA"],
+    tags: ["Selenium", "Python", "Pytest", "Allure Reports", "Regression Testing"],
   },
   {
     company: "Cires Technologies",
@@ -77,10 +84,10 @@ const EXPERIENCES = [
     type: "Internship",
     period: "Jul 2024",
     color: "#00b87a",
-    description: "Delivered a complete meeting room management system from scratch, covering reservation, scheduling, and space optimization.",
+    description: "Delivered a complete meeting room reservation and scheduling system from scratch using PHP MVC architecture — on time and fully tested.",
     highlights: [
-      "Built full reservation and planning system using PHP native MVC",
-      "Implemented space optimization and scheduling logic",
+      "Built end-to-end reservation, planning, and space-optimization system from the ground up",
+      "Applied SQL query optimization for real-time room availability — sub-100ms response times",
     ],
     tags: ["PHP", "MySQL", "MVC", "Full-Stack"],
   },
@@ -89,66 +96,74 @@ const EXPERIENCES = [
 const PROJECTS = [
   {
     id: "01",
-    title: "Enterprise Stock Management",
-    subtitle: "Salsabil · Mineral Water Distribution",
-    category: "Enterprise · AI",
-    description: "Full-stack enterprise platform managing mineral water distribution across Morocco with real-time AI-powered insights, demand forecasting using exponential smoothing, Z-score anomaly detection, and a 5-tier recommendation engine.",
-    metrics: ["Multi-city distribution management", "AI demand forecasting", "Real-time WebSocket KPIs", "Automated alert system"],
-    tech: ["Django", "Angular 18", "PostgreSQL", "Redis", "Celery", "WebSockets", "ECharts"],
+    title: "AI Test Generation Engine",
+    subtitle: "Groq LLM · RAG · Cypress · Django",
+    category: "AI · QA · Automation",
+    featured: true,
+    problem: "Writing Cypress test suites manually is a bottleneck — engineers waste hours on boilerplate instead of shipping features.",
+    solution: "A Django backend system that takes user stories or API specs as input, retrieves context via RAG from existing test patterns, then auto-generates production-ready Cypress test suites using Groq LLM — integrated into GitHub Actions CI.",
+    description: "End-to-end AI system that auto-generates production-ready Cypress E2E test suites from user stories using RAG + LLM. Django backend orchestrates prompt engineering, context retrieval, and test file export — integrated directly into CI pipelines.",
+    metrics: ["3× faster test suite creation", "90%+ validity on generated tests", "GitHub Actions CI integration", "Supports 10+ auto-detected page types"],
+    tech: ["Django", "Groq API", "LLM", "RAG", "Cypress", "PostgreSQL", "GitHub Actions"],
     color: "#00d4ff",
-    link: "https://github.com/Redajebbah/salsabil-project",
+    link: "https://github.com/Redajebbah",
   },
   {
     id: "02",
-    title: "Conversational AI — Insurance",
-    subtitle: "Atlanta Sanad · NLP Production System",
-    category: "AI · NLP · Production",
-    description: "Production-grade conversational AI chatbot deployed for a leading insurance group. Automates client intake with intent detection, dynamic responses, and seamless advisor handoff — running 24/7 in production.",
-    metrics: ["-40% advisor processing time", "+25% lead capture rate", "24/7 automated qualification", "Docker production deploy"],
-    tech: ["Python", "Django", "spaCy", "NLP", "Docker", "REST API"],
+    title: "Industrial Supervision Platform",
+    subtitle: "OCP Groupe · World's #1 Phosphate Producer",
+    category: "Industrial · QA · Full-Stack",
+    featured: false,
+    description: "Mission-critical real-time monitoring system for OCP Groupe. Integrates with OSIsoft PI System to track machine states and surface live OEE/TRS metrics — with 80+ test scenarios ensuring bulletproof reliability.",
+    metrics: ["80+ test scenarios (E2E, API, Perf)", "Real-time TRS/OEE computation", "PI System live data integration", "Zero production incidents post-launch"],
+    tech: ["Spring Boot", "Angular", "PI System", "PostgreSQL", "Cypress", "JMeter", "Xray"],
     color: "#7c3aed",
     link: "https://github.com/Redajebbah",
   },
   {
     id: "03",
-    title: "Industrial Supervision Platform",
-    subtitle: "OCP Groupe · PI System Integration",
-    category: "Industrial · Full-Stack",
-    description: "Real-time industrial monitoring system for OCP Groupe (world's #1 phosphate producer). Integrates with OSIsoft PI System to track machine states, compute OEE/TRS metrics, and surface operational intelligence.",
-    metrics: ["Real-time TRS indicators", "PI System integration", "80+ test scenarios", "Agile/Xray workflow"],
-    tech: ["Spring Boot", "Angular", "PI System", "PostgreSQL", "Cypress", "JMeter"],
+    title: "Enterprise E2E Automation Suite",
+    subtitle: "Selenium · Pytest · GitHub Actions",
+    category: "Test Automation · DevOps",
+    featured: false,
+    description: "Transformed a fully manual QA process into a zero-touch regression pipeline — 60 automated test cases, Allure HTML reports, and a GitHub Actions workflow that gates every PR before merge.",
+    metrics: ["−60% regression testing time", "60+ automated test cases", "Allure HTML reports auto-generated", "PR-gated CI — zero manual runs"],
+    tech: ["Selenium", "Python", "Pytest", "GitHub Actions", "Docker", "Allure Reports"],
     color: "#f72585",
     link: "https://github.com/Redajebbah",
   },
   {
     id: "04",
-    title: "E2E Test Automation Suite",
-    subtitle: "CI/CD · GitHub Actions Pipeline",
-    category: "Automation · DevOps",
-    description: "Comprehensive end-to-end automation framework with 50+ test cases, automated HTML reporting, and fully integrated GitHub Actions CI/CD pipeline ensuring zero-regression deployments.",
-    metrics: ["50+ automated test cases", "Automated HTML reporting", "CI/CD pipeline integrated", "Zero manual regression"],
-    tech: ["Python", "Selenium", "Pytest", "GitHub Actions", "Docker"],
+    title: "Conversational AI — Insurance",
+    subtitle: "Atlanta Sanad · NLP in Production",
+    category: "AI · NLP · Production",
+    featured: false,
+    description: "Production-grade bilingual (Arabic/French) chatbot handling client intake 24/7 for Atlanta Sanad. Reduced advisor load by 40%, boosted lead conversion by 25% — deployed on Docker with 99% uptime.",
+    metrics: ["−40% advisor processing time", "+25% lead conversion rate", "24/7 live — 5 months uptime", "Arabic + French NLP pipeline"],
+    tech: ["Python", "Django", "spaCy", "NLP", "Docker", "REST API"],
     color: "#00b87a",
     link: "https://github.com/Redajebbah",
   },
   {
     id: "05",
-    title: "Nexagen Studio",
-    subtitle: "AI-Powered Digital Agency Website",
-    category: "Frontend · 3D · Animation",
-    description: "Premium digital agency website featuring Three.js neural network animations, multilingual support (EN/FR/AR with full RTL), integrated AI chatbot powered by Claude API, and advanced micro-interactions.",
-    metrics: ["Three.js 3D neural network", "EN/FR/AR + RTL support", "AI chatbot (Claude API)", "Custom cursor & film grain"],
-    tech: ["Next.js 14", "Three.js", "React", "Framer Motion", "Claude API", "i18n"],
+    title: "Enterprise Stock Management",
+    subtitle: "Salsabil · Mineral Water Distribution",
+    category: "Enterprise · AI · Full-Stack",
+    featured: false,
+    description: "Full-stack distribution management platform with AI demand forecasting (exponential smoothing), Z-score anomaly detection, real-time WebSocket KPIs, and a 5-tier stock recommendation engine.",
+    metrics: ["AI demand forecasting engine", "Z-score anomaly detection", "Real-time WebSocket dashboard", "Multi-city distribution network"],
+    tech: ["Django", "Angular 18", "PostgreSQL", "Redis", "Celery", "WebSockets"],
     color: "#f59e0b",
-    link: "https://github.com/Redajebbah/nexagen-studio",
+    link: "https://github.com/Redajebbah/salsabil-project",
   },
   {
     id: "06",
     title: "AI Assessment Platform",
     subtitle: "Accounting Level Up · SaaS",
-    category: "SaaS · React · AI",
-    description: "AI-powered proficiency assessment platform auto-classifying candidates into skill tiers (Beginner / Intermediate / Advanced) with lead capture, WhatsApp integration, email verification, and an admin analytics dashboard.",
-    metrics: ["20-question AI assessment", "Auto skill classification", "Lead capture + CRM", "Admin analytics dashboard"],
+    category: "SaaS · AI",
+    featured: false,
+    description: "AI-powered candidate proficiency SaaS auto-classifying skill level into 3 tiers. Features WhatsApp integration, admin analytics, and email verification — deployed and live.",
+    metrics: ["3-tier AI skill classification", "WhatsApp + email automation", "Admin analytics dashboard", "Live SaaS — real traffic"],
     tech: ["React 18", "TypeScript", "Supabase", "TanStack Query", "Tailwind CSS"],
     color: "#e879f9",
     link: "https://github.com/Redajebbah/accounting-level-up",
@@ -156,29 +171,29 @@ const PROJECTS = [
 ];
 
 const SKILLS = {
-  "Testing & QA": {
+  "QA & Testing": {
     color: "#00d4ff",
-    items: ["Cypress", "Selenium", "JMeter", "JUnit", "Postman", "Xray", "BDD", "TDD", "API Testing"],
+    items: ["Cypress", "Selenium", "JMeter", "Postman", "Xray", "BDD / Gherkin", "API Testing", "Performance Testing", "TDD"],
   },
-  "AI & Machine Learning": {
+  "AI & Automation": {
     color: "#7c3aed",
-    items: ["Python", "scikit-learn", "spaCy", "TensorFlow", "NLP", "LLM APIs", "RAG", "Chatbots"],
-  },
-  "Frontend": {
-    color: "#f72585",
-    items: ["React", "Angular 18", "Next.js 14", "TypeScript", "Three.js", "Tailwind CSS"],
+    items: ["LLM APIs (Groq)", "RAG Systems", "Prompt Engineering", "spaCy / NLP", "Test Generation AI", "scikit-learn", "Chatbot Dev"],
   },
   "Backend": {
+    color: "#f72585",
+    items: ["Django", "Spring Boot", "REST APIs", "WebSockets", "Celery", "PHP MVC"],
+  },
+  "Frontend": {
     color: "#00b87a",
-    items: ["Spring Boot", "Django", "PHP MVC", "REST APIs", "WebSockets", "Celery"],
+    items: ["Angular 18", "React", "Next.js 14", "TypeScript", "Three.js", "Tailwind CSS"],
   },
   "Databases": {
     color: "#f59e0b",
-    items: ["PostgreSQL", "MongoDB", "Oracle", "Neo4j", "Redis", "SQL / PL-SQL"],
+    items: ["PostgreSQL", "MongoDB", "Redis", "Oracle", "Neo4j", "SQL / PL-SQL"],
   },
-  "DevOps & Cloud": {
+  "DevOps & Tools": {
     color: "#e879f9",
-    items: ["Docker", "GitHub Actions", "Jenkins", "Kubernetes", "OpenShift", "Git"],
+    items: ["Docker", "GitHub Actions", "Jenkins", "Kubernetes", "Git", "OpenShift"],
   },
 };
 
@@ -338,10 +353,19 @@ const CSS = `
   .pf-proj::after{content:'';position:absolute;inset:0;opacity:0;transition:opacity 0.4s;border-radius:16px;pointer-events:none}
   .pf-proj:hover{border-color:rgba(255,255,255,0.1);transform:translateY(-4px)}
   .pf-proj:hover::after{opacity:1}
+  /* Featured project — full width, elevated */
+  .pf-proj.featured{grid-column:1/-1;border-color:rgba(0,212,255,0.18);background:linear-gradient(135deg,rgba(0,212,255,0.04) 0%,rgba(255,255,255,0.01) 60%)}
+  .pf-proj.featured:hover{border-color:rgba(0,212,255,0.35);transform:translateY(-5px)}
+  .pf-feat-badge{display:inline-flex;align-items:center;gap:0.35rem;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.22);border-radius:100px;padding:0.25rem 0.75rem;font-size:0.68rem;color:#00d4ff;letter-spacing:0.08em;text-transform:uppercase;font-family:'Fira Code',monospace;margin-bottom:1rem}
+  .pf-feat-badge::before{content:'★';font-size:0.6rem}
+  .pf-feat-body{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start;margin:1.2rem 0}
+  .pf-feat-block-label{font-size:0.65rem;letter-spacing:0.14em;color:#00d4ff;text-transform:uppercase;font-family:'Fira Code',monospace;margin-bottom:0.45rem}
+  .pf-feat-block-text{color:#a0a0c0;font-size:0.88rem;line-height:1.65}
   .pf-proj-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:0.9rem}
   .pf-proj-num{font-family:'Space Grotesk',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.12em}
   .pf-proj-cat{font-family:'Fira Code',monospace;font-size:0.68rem;color:#8888a0;letter-spacing:0.1em;text-transform:uppercase}
   .pf-proj-title{font-family:'Space Grotesk',sans-serif;font-size:1.22rem;font-weight:700;color:#e2e0ea;line-height:1.2;margin-bottom:0.2rem}
+  .pf-proj-title.featured{font-size:1.7rem}
   .pf-proj-sub{font-size:0.78rem;color:#8888a0;margin-bottom:0.9rem}
   .pf-proj-desc{color:#6868a0;font-size:0.85rem;line-height:1.68;margin-bottom:1.1rem}
   .pf-proj-metrics{display:flex;flex-direction:column;gap:0.28rem;margin-bottom:1.1rem}
@@ -776,7 +800,7 @@ function Hero() {
         </div>
 
         <div className="pf-stack">
-          {["Python", "Django", "Angular", "Cypress", "NLP", "Spring Boot", "Docker", "Three.js"].map((s) => (
+          {["Cypress", "Selenium", "LLM / RAG", "Django", "Angular", "Docker", "GitHub Actions", "Xray"].map((s) => (
             <span key={s} className="pf-pill">{s}</span>
           ))}
         </div>
@@ -841,8 +865,8 @@ function About() {
           <div className={`pf-r${hOn ? " on" : ""}`}>
             <p className="pf-sec-lbl">// About</p>
             <h2 className="pf-sec-h">
-              Engineering Intelligence,<br />
-              <em>One System at a Time.</em>
+              Quality is Not a Feature —<br />
+              <em>It's the Foundation.</em>
             </h2>
           </div>
         </div>
@@ -850,16 +874,16 @@ function About() {
         <div className="pf-about" ref={bRef}>
           <div>
             <p className={`pf-about-p pf-r d1${bOn ? " on" : ""}`}>
-              I'm a software engineering graduate from <strong style={{ color: "#e2e0ea" }}>EMSI Tangier</strong> (2025), specialized in the MIAGE track — bridging software quality, automation, and applied AI. I approach every project as a systems engineer: thinking about reliability, scalability, and real-world impact.
+              I didn't start in QA by accident. At <strong style={{ color: "#e2e0ea" }}>EMSI Tangier</strong>, studying the MIAGE track, I realized early that the most valuable engineer in any team isn't the one who writes the most code — it's the one who ensures that code <em>actually works in production</em>. That realization shaped everything.
             </p>
             <p className={`pf-about-p pf-r d2${bOn ? " on" : ""}`}>
-              My work spans from building <strong style={{ color: "#00d4ff" }}>conversational AI chatbots</strong> deployed in production for insurance companies, to <strong style={{ color: "#7c3aed" }}>industrial supervision platforms</strong> tracking real-time production metrics for OCP Groupe — one of the world's largest corporations.
+              At <strong style={{ color: "#00d4ff" }}>OCP Groupe</strong> — the world's largest phosphate producer — I executed 80+ test scenarios across API, E2E, and performance layers for a mission-critical industrial platform. Zero post-deployment incidents. That's the standard I hold myself to.
             </p>
             <p className={`pf-about-p pf-r d3${bOn ? " on" : ""}`}>
-              I combine engineering precision with creative problem-solving, whether I'm writing 80+ test scenarios with Cypress and JMeter, training NLP models with spaCy, or architecting full-stack systems with Django, Angular, and PostgreSQL.
+              My edge: I bring <strong style={{ color: "#7c3aed" }}>AI into testing</strong>. I've built systems that use LLMs and RAG to auto-generate Cypress test suites — turning hours of manual test writing into minutes. Quality at the speed of development. That's what modern QA engineering looks like.
             </p>
             <div className={`pf-about-tags pf-r d4${bOn ? " on" : ""}`}>
-              {["#QualityEngineering", "#AIAutomation", "#FullStack", "#NLP", "#TestDriven", "#MIAGE"].map((t) => (
+              {["#QAEngineering", "#AITestAutomation", "#Cypress", "#LLM", "#ZeroBugsInProd", "#MIAGE"].map((t) => (
                 <span key={t} className="pf-about-tag">{t}</span>
               ))}
             </div>
@@ -955,8 +979,8 @@ function Experience() {
         <div ref={hRef}>
           <div className={`pf-r${hOn ? " on" : ""}`}>
             <p className="pf-sec-lbl">// Experience</p>
-            <h2 className="pf-sec-h">Professional <em>Journey</em></h2>
-            <p className="pf-sec-sub">From automating insurance workflows to building industrial monitoring systems — each role deepened my engineering instincts.</p>
+            <h2 className="pf-sec-h">Where I've <em>Delivered</em></h2>
+            <p className="pf-sec-sub">From enterprise QA at OCP Groupe to AI systems in production — real clients, real stakes, measurable results.</p>
           </div>
         </div>
 
@@ -971,6 +995,44 @@ function Experience() {
 // ─── PROJECTS ─────────────────────────────────────────────────
 function ProjectCard({ p, delay }) {
   const [ref, on] = useReveal();
+
+  if (p.featured) {
+    return (
+      <div ref={ref} className={`pf-proj featured pf-r d1${on ? " on" : ""}`}>
+        <div className="pf-feat-badge">Flagship Project</div>
+        <div className="pf-proj-top">
+          <span className="pf-proj-num" style={{ color: p.color }}>{p.id}</span>
+          <span className="pf-proj-cat">{p.category}</span>
+        </div>
+        <div className="pf-proj-title featured">{p.title}</div>
+        <div className="pf-proj-sub">{p.subtitle}</div>
+
+        <div className="pf-feat-body">
+          <div>
+            <div className="pf-feat-block-label">// The Problem</div>
+            <p className="pf-feat-block-text">{p.problem}</p>
+          </div>
+          <div>
+            <div className="pf-feat-block-label">// The Solution</div>
+            <p className="pf-feat-block-text">{p.solution}</p>
+          </div>
+        </div>
+
+        <div className="pf-proj-metrics" style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "0.35rem" }}>
+          {p.metrics.map((m) => <div key={m} className="pf-proj-metric">{m}</div>)}
+        </div>
+        <div className="pf-proj-foot" style={{ marginTop: "1.25rem" }}>
+          <div className="pf-proj-tech">
+            {p.tech.map((t) => <span key={t} className="pf-tech-chip">{t}</span>)}
+          </div>
+          <a href={p.link} target="_blank" rel="noopener noreferrer" className="pf-proj-link">
+            GitHub →
+          </a>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div ref={ref} className={`pf-proj pf-r d${delay}${on ? " on" : ""}`}>
       <div className="pf-proj-top">
@@ -1005,8 +1067,8 @@ function Projects() {
         <div ref={hRef}>
           <div className={`pf-r${hOn ? " on" : ""}`}>
             <p className="pf-sec-lbl">// Projects</p>
-            <h2 className="pf-sec-h">What I've <em>Built</em></h2>
-            <p className="pf-sec-sub">From production AI chatbots to enterprise management platforms — each project solves a real problem.</p>
+            <h2 className="pf-sec-h">Systems I've <em>Shipped</em></h2>
+            <p className="pf-sec-sub">From AI-powered test generation to mission-critical industrial platforms — every project is defined by real impact and measurable results.</p>
           </div>
         </div>
 
@@ -1441,13 +1503,13 @@ function Contact() {
       <div className="pf-contact" ref={ref}>
         <div className="pf-contact-inner">
           <div className={`pf-r${on ? " on" : ""}`}>
-            <p className="pf-sec-lbl" style={{ textAlign: "center" }}>// Contact</p>
-            <h2 className="pf-sec-h" style={{ textAlign: "center", maxWidth: 600, margin: "0 auto 1rem" }}>
-              Let's Build Something <em>Remarkable</em>
+            <p className="pf-sec-lbl" style={{ textAlign: "center" }}>// Open to Opportunities</p>
+            <h2 className="pf-sec-h" style={{ textAlign: "center", maxWidth: 680, margin: "0 auto 1rem" }}>
+              Your Next QA Engineer<br /><em>Is Right Here.</em>
             </h2>
           </div>
           <p className={`pf-contact-desc pf-r d1${on ? " on" : ""}`}>
-            I'm open to full-time opportunities, freelance projects, and collaborations in AI, automation, and full-stack engineering. Let's talk.
+            I'm actively looking for <strong style={{ color: "#e2e0ea" }}>QA Engineer, Test Automation, or AI Engineering roles</strong> — remote or on-site, anywhere in the world. If you're building a product that needs to ship with confidence, let's talk.
           </p>
           <div className={`pf-r d2${on ? " on" : ""}`}>
             <div className="pf-phone-row">
