@@ -198,12 +198,72 @@ const SKILLS = {
 };
 
 const CERTIFICATIONS = [
-  { title: "Machine Learning with Python", issuer: "IBM", year: "2025", color: "#00d4ff" },
-  { title: "Containers: Docker, K8s & OpenShift", issuer: "IBM", year: "2025", color: "#7c3aed" },
-  { title: "Scalable Java Microservices — Spring Boot", issuer: "Google", year: "2025", color: "#f72585" },
-  { title: "Getting Started with GitHub Copilot", issuer: "Great Learning", year: "2025", color: "#00b87a" },
-  { title: "Introduction to Git and GitHub", issuer: "Google", year: "2025", color: "#f59e0b" },
-  { title: "React Native", issuer: "Meta (Coursera)", year: "2024", color: "#e879f9" },
+  {
+    title: "Introduction to Java & Object-Oriented Programming",
+    issuer: "University of Pennsylvania",
+    platform: "Coursera",
+    date: "Jan 2024",
+    color: "#3178C6",
+    avatar: "UPenn",
+    avatarBg: "#011F5B",
+    url: "https://coursera.org/verify/XMJYLXKWTN5X",
+    credId: "XMJYLXKWTN5X",
+  },
+  {
+    title: "Programming for Everybody — Getting Started with Python",
+    issuer: "University of Michigan",
+    platform: "Coursera",
+    date: "Jun 2023",
+    color: "#FFCB05",
+    avatar: "UMich",
+    avatarBg: "#00274C",
+    url: "https://coursera.org/verify/TKNUPR2SPULN",
+    credId: "TKNUPR2SPULN",
+  },
+  {
+    title: "Software Engineering: Modeling Systems using UML",
+    issuer: "HKUST",
+    platform: "Coursera",
+    date: "May 2023",
+    color: "#00b4d8",
+    avatar: "HKUST",
+    avatarBg: "#003566",
+    url: "https://coursera.org/verify/89LZGWJZYM3Z",
+    credId: "89LZGWJZYM3Z",
+  },
+  {
+    title: "React Native",
+    issuer: "Meta",
+    platform: "Coursera",
+    date: "May 2024",
+    color: "#0081FB",
+    avatar: "Meta",
+    avatarBg: "#0A0A2E",
+    url: "https://coursera.org/verify/P82EZUGYJH43",
+    credId: "P82EZUGYJH43",
+  },
+  {
+    title: "Getting Started with GitHub Copilot",
+    issuer: "Great Learning",
+    platform: "Hands-on",
+    date: "2024",
+    color: "#3FB950",
+    avatar: "GL",
+    avatarBg: "#0D1117",
+    url: null,
+    credId: "Z9KJPV31Y5",
+  },
+  {
+    title: "React Basics",
+    issuer: "Meta",
+    platform: "Coursera",
+    date: "Jan 2024",
+    color: "#61DAFB",
+    avatar: "Meta",
+    avatarBg: "#0A0A2E",
+    url: "https://coursera.org/verify/Z3V98LATD5EB",
+    credId: "Z3V98LATD5EB",
+  },
 ];
 
 // ─── 3D KEYBOARD KEYS ─────────────────────────────────────────
@@ -388,15 +448,30 @@ const CSS = `
   .pf-sk-item{font-family:'Fira Code',monospace;font-size:0.7rem;padding:0.22rem 0.5rem;border-radius:4px;border:1px solid;background:rgba(0,0,0,0.25)}
 
   /* CERTS */
-  .pf-certs-scroll{display:flex;gap:1.2rem;overflow-x:auto;padding-bottom:0.75rem;margin-top:3.5rem;scrollbar-width:thin}
-  .pf-certs-scroll::-webkit-scrollbar{height:3px}
-  .pf-certs-scroll::-webkit-scrollbar-thumb{background:rgba(0,212,255,0.18);border-radius:2px}
-  .pf-cert{flex-shrink:0;width:215px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:1.3rem;transition:transform 0.25s,border-color 0.25s}
-  .pf-cert:hover{transform:translateY(-3px)}
-  .pf-cert-iss{font-size:0.68rem;font-family:'Fira Code',monospace;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.55rem}
-  .pf-cert-title{font-family:'Space Grotesk',sans-serif;font-size:0.88rem;font-weight:600;color:#e2e0ea;line-height:1.35;margin-bottom:0.5rem}
-  .pf-cert-year{font-size:0.72rem;color:#44445a}
-  .pf-cert-bar{height:2px;border-radius:2px;margin-top:0.9rem;opacity:0.5}
+  .pf-certs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3.5rem}
+  .pf-cert-card{background:rgba(255,255,255,0.023);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:1.75rem;position:relative;overflow:hidden;cursor:default;display:flex;flex-direction:column;opacity:0;transform:translateY(30px);transition:opacity 0.55s ease,transform 0.55s ease,border-color 0.3s ease,box-shadow 0.3s ease}
+  .pf-cert-card.on{opacity:1;transform:translateY(0)}
+  .pf-cert-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cc),transparent);opacity:0.65;transition:opacity 0.3s}
+  .pf-cert-card:hover{border-color:rgba(255,255,255,0.13);box-shadow:0 18px 52px rgba(0,0,0,0.45);transform:translateY(-6px)!important}
+  .pf-cert-card:hover::before{opacity:1}
+  .pf-cert-card:hover .pf-cert-avatar{transform:scale(1.08) rotate(-3deg)}
+  .pf-cert-platform{display:inline-flex;align-items:center;gap:0.35rem;font-family:'Fira Code',monospace;font-size:0.63rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--cc);margin-bottom:1.1rem}
+  .pf-cert-platform-dot{width:5px;height:5px;border-radius:50%;background:var(--cc);flex-shrink:0;animation:pfPulse 2.5s ease-in-out infinite}
+  .pf-cert-avatar{width:44px;height:44px;border-radius:10px;background:var(--cab);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-family:'Space Grotesk',sans-serif;font-size:0.6rem;font-weight:800;color:rgba(255,255,255,0.85);letter-spacing:0.02em;flex-shrink:0;transition:transform 0.35s ease;text-align:center;line-height:1.2}
+  .pf-cert-issuer{font-size:0.68rem;color:rgba(255,255,255,0.32);margin-bottom:0.3rem;font-family:'Fira Code',monospace;letter-spacing:0.06em}
+  .pf-cert-title-text{font-family:'Space Grotesk',sans-serif;font-size:0.93rem;font-weight:700;color:#e2e0ea;line-height:1.35;margin-bottom:1rem;flex:1}
+  .pf-cert-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;margin-top:auto}
+  .pf-cert-date{font-family:'Fira Code',monospace;font-size:0.66rem;color:#44445a}
+  .pf-cert-verify{display:inline-flex;align-items:center;gap:0.3rem;font-size:0.65rem;font-family:'Fira Code',monospace;color:var(--cc);text-decoration:none;border:1px solid;border-color:color-mix(in srgb,var(--cc) 30%,transparent);border-radius:100px;padding:0.22rem 0.6rem;transition:all 0.2s}
+  .pf-cert-verify:hover{background:color-mix(in srgb,var(--cc) 10%,transparent);gap:0.5rem}
+  .pf-cert-credid{font-size:0.6rem;color:#33334a;font-family:'Fira Code',monospace;margin-top:0.45rem;letter-spacing:0.04em}
+  /* Marquee */
+  .pf-cert-marquee-wrap{overflow:hidden;margin-top:3rem;-webkit-mask-image:linear-gradient(90deg,transparent,black 12%,black 88%,transparent);mask-image:linear-gradient(90deg,transparent,black 12%,black 88%,transparent)}
+  .pf-cert-marquee{display:flex;width:max-content;animation:pfMarquee 22s linear infinite}
+  .pf-cert-marquee:hover{animation-play-state:paused}
+  .pf-cert-marquee-item{display:flex;align-items:center;gap:0.6rem;padding:0 1.5rem;white-space:nowrap;font-family:'Space Grotesk',sans-serif;font-size:0.8rem;font-weight:600;color:rgba(255,255,255,0.18);letter-spacing:0.06em}
+  .pf-cert-marquee-dot{width:4px;height:4px;border-radius:50%;background:rgba(0,212,255,0.35);flex-shrink:0}
+  @keyframes pfMarquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
   /* CONTACT */
   .pf-contact{padding:7rem 5rem;text-align:center;border-top:1px solid rgba(255,255,255,0.04);position:relative;overflow:hidden}
@@ -442,6 +517,7 @@ const CSS = `
     .pf-sec-num{right:3rem}
     .pf-proj-grid{grid-template-columns:repeat(2,1fr)}
     .pf-skills-grid{grid-template-columns:repeat(2,1fr)}
+    .pf-certs-grid{grid-template-columns:repeat(2,1fr)}
   }
   @media(max-width:900px){
     .pf-nav{padding:1.1rem 1.5rem}
@@ -459,8 +535,8 @@ const CSS = `
     .pf-proj-grid{grid-template-columns:1fr}
     .pf-skills-grid{grid-template-columns:repeat(2,1fr)}
     .pf-kb-wrap{height:420px}
-    .pf-certs-scroll{gap:1rem}
-    .pf-cert{min-width:220px;padding:1.5rem}
+    .pf-certs-grid{grid-template-columns:repeat(2,1fr)}
+    .pf-cert-card{padding:1.4rem}
     .pf-contact{padding:4rem 1.5rem}
     .pf-footer{flex-direction:column;gap:0.75rem;text-align:center;padding:1.5rem}
     .pf-exp-item{padding-left:1.5rem}
@@ -478,8 +554,8 @@ const CSS = `
     .pf-sec-h{font-size:1.85rem}
     .pf-proj-grid{grid-template-columns:1fr}
     .pf-proj{padding:1.5rem}
-    .pf-certs-scroll{gap:0.75rem}
-    .pf-cert{min-width:190px;padding:1.25rem}
+    .pf-certs-grid{grid-template-columns:1fr}
+    .pf-cert-card{padding:1.25rem}
     .pf-hero-pills{flex-wrap:wrap;gap:0.4rem}
     .pf-about-tags{flex-wrap:wrap}
   }
@@ -745,7 +821,7 @@ function Navbar() {
     <nav className={`pf-nav${scrolled ? " pf-scrolled" : ""}`}>
       <a href="#" className="pf-logo">RJ<span>.</span></a>
       <ul className="pf-nav-links">
-        {["about", "experience", "projects", "skills", "contact"].map((id) => (
+        {["about", "experience", "projects", "skills", "certifications", "contact"].map((id) => (
           <li key={id}>
             <a href={`#${id}`} onClick={(e) => { e.preventDefault(); scrollTo(id); }}>
               {id.charAt(0).toUpperCase() + id.slice(1)}
@@ -1465,30 +1541,97 @@ function Skills() {
 
 // ─── CERTIFICATIONS ───────────────────────────────────────────
 function Certifications() {
-  const [hRef, hOn] = useReveal();
+  const [hRef, hOn] = useReveal(0.1);
+  const [gridRef, gridOn] = useReveal(0.05);
+
+  const MARQUEE_ITEMS = [
+    "University of Pennsylvania",
+    "University of Michigan",
+    "Hong Kong UST",
+    "Meta",
+    "Great Learning",
+    "GitHub Copilot",
+    "Coursera",
+  ];
 
   return (
-    <section style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+    <section id="certifications" style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}>
       <div className="pf-sec">
         <div className="pf-sec-num">05</div>
+
         <div ref={hRef}>
           <div className={`pf-r${hOn ? " on" : ""}`}>
-            <p className="pf-sec-lbl">// Certifications</p>
-            <h2 className="pf-sec-h">Continuous <em>Learning</em></h2>
-            <p className="pf-sec-sub">Validated expertise from Google, IBM, Meta, and Great Learning.</p>
+            <p className="pf-sec-lbl">// Credentials</p>
+            <h2 className="pf-sec-h">Certified by <em>the Best.</em></h2>
+            <p className="pf-sec-sub">
+              6 verified credentials from top universities and industry leaders — every one earned, every one linked.
+            </p>
           </div>
         </div>
 
-        <div className="pf-certs-scroll">
+        <div ref={gridRef} className="pf-certs-grid">
           {CERTIFICATIONS.map((c, i) => (
-            <div key={i} className="pf-cert">
-              <div className="pf-cert-iss" style={{ color: c.color }}>{c.issuer}</div>
-              <div className="pf-cert-title">{c.title}</div>
-              <div className="pf-cert-year">{c.year}</div>
-              <div className="pf-cert-bar" style={{ background: `linear-gradient(90deg, ${c.color}, transparent)` }} />
+            <div
+              key={i}
+              className={`pf-cert-card${gridOn ? " on" : ""}`}
+              style={{
+                "--cc": c.color,
+                "--cab": c.avatarBg,
+                transitionDelay: gridOn ? `${i * 0.08}s` : "0s",
+              }}
+            >
+              {/* Platform badge */}
+              <div className="pf-cert-platform">
+                <span className="pf-cert-platform-dot" />
+                {c.platform}
+              </div>
+
+              {/* Issuer avatar */}
+              <div className="pf-cert-avatar">{c.avatar}</div>
+
+              {/* Issuer name */}
+              <div className="pf-cert-issuer">{c.issuer}</div>
+
+              {/* Course title */}
+              <div className="pf-cert-title-text">{c.title}</div>
+
+              {/* Date + Verify */}
+              <div className="pf-cert-bottom">
+                <span className="pf-cert-date">{c.date}</span>
+                {c.url ? (
+                  <a
+                    href={c.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="pf-cert-verify"
+                  >
+                    Verify ↗
+                  </a>
+                ) : (
+                  <span className="pf-cert-verify" style={{ cursor: "default", opacity: 0.55 }}>
+                    {c.credId}
+                  </span>
+                )}
+              </div>
+
+              {/* Credential ID */}
+              <div className="pf-cert-credid">ID · {c.credId}</div>
             </div>
           ))}
         </div>
+
+        {/* Animated marquee */}
+        <div className="pf-cert-marquee-wrap">
+          <div className="pf-cert-marquee">
+            {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
+              <span key={i} className="pf-cert-marquee-item">
+                {item}
+                <span className="pf-cert-marquee-dot" />
+              </span>
+            ))}
+          </div>
+        </div>
+
       </div>
     </section>
   );
